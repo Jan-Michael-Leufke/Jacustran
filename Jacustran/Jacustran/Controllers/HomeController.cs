@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+
+using Microsoft.AspNetCore.Mvc;
 
 namespace Jacustran.Controllers;
 
@@ -6,6 +8,7 @@ namespace Jacustran.Controllers;
 [Route("api/[controller]")]
 public class HomeController : ControllerBase
 {
+    public Product product = new Product();
     public IActionResult Index()
     {
         return Ok("Hello, World from home controller!");

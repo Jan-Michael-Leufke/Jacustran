@@ -1,3 +1,6 @@
+global using Jacustran.Domain.Entities;
+global using Jacustran.Domain.Shared;
+
 using Jacustran.Client.Pages;
 using Jacustran.Components;
 
