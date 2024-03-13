@@ -9,7 +9,9 @@ namespace Jacustran.Controllers;
 public class HomeController : ControllerBase
 {
     public Product product = new Product();
-    public IActionResult Index()
+
+    [HttpGet]
+    public ActionResult<string> Index()
     {
         return Ok("Hello, World from home controller!");
     }

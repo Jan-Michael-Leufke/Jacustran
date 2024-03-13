@@ -12,8 +12,23 @@ builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 
 builder.Services.AddControllers();
+builder.Services.AddScoped<HttpClient>(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7248") });
+
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(setup => 
+{ 
+    setup.SwaggerDoc("v1", new()  { Title = "Jacustran API", Version = "v1", Description = "Colletions of Endpoints for Jacustran related Data-Fetching used in the context of SPAs." });
+});
 
 var app = builder.Build();
+
+app.UseSwagger();
+app.UseSwaggerUI(setup =>
+{
+    setup.SwaggerEndpoint("/swagger/v1/swagger.json", "Jacustran API V1");
+    setup.RoutePrefix = "swagger";
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -38,5 +53,6 @@ app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()
     .AddInteractiveWebAssemblyRenderMode()
     .AddAdditionalAssemblies(typeof(Jacustran.Client._Imports).Assembly);
+
 
 app.Run();
