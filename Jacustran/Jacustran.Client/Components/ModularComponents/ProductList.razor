@@ -1,0 +1,25 @@
+﻿
+
+<ul class="list-unstyled">
+    @foreach (var product in _products)
+    {
+        <li class="media my-3">
+            <div class="media-img-wrapper me-4">
+                <a href="#">
+                    <img class="media-img"  src="@product.ImageUrl" alt="@product.Name" />
+                </a>
+            </div>
+            <div class="media-body">
+                <a href="#">
+                    <h4 class="mb-0">@product.Name</h4>
+                </a>
+                <p>@product.Description</p>
+                <h5 class="price">@($"{product.Price} €")</h5>
+            </div>
+                
+        </li>
+    }
+</ul>
+
+
+

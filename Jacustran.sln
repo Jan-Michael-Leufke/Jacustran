@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jacustran", "Jacustran\Jacustran\Jacustran.csproj", "{570BD530-19DA-49D0-973D-7AEC84908A8D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jacustran", "Jacustran\Jacustran\Jacustran.csproj", "{570BD530-19DA-49D0-973D-7AEC84908A8D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jacustran.Client", "Jacustran\Jacustran.Client\Jacustran.Client.csproj", "{74FD9E5A-F076-43AB-81B0-A24EC6AA3A08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jacustran.Client", "Jacustran\Jacustran.Client\Jacustran.Client.csproj", "{74FD9E5A-F076-43AB-81B0-A24EC6AA3A08}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{48E8CD4E-93F8-4E5B-B751-E6E41D35E24F}"
 EndProject
@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{5DB1553D-3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{8E2C3A0C-900E-4102-9125-EE81C34FEA7F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jacustran.Domain", "Jacustran.Domain\Jacustran.Domain.csproj", "{86B2A6C9-6E29-4536-847A-E32622FDDA89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jacustran.Domain", "Jacustran.Domain\Jacustran.Domain.csproj", "{86B2A6C9-6E29-4536-847A-E32622FDDA89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

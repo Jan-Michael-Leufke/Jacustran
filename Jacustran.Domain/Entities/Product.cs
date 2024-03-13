@@ -14,4 +14,7 @@ public class Product(string name) : EntityBase
     public Category? Category { get; set; }
     public Guid CategoryId { get; set; }
 }
+                                            
+                                                                                
+
 

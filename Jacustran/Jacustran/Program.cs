@@ -1,7 +1,7 @@
 global using Jacustran.Domain.Entities;
 global using Jacustran.Domain.Shared;
 
-using Jacustran.Client.Pages;
+using Jacustran.Client.Components.PageComponents;
 using Jacustran.Components;
 
 var builder = WebApplication.CreateBuilder(args);

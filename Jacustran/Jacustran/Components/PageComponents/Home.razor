@@ -1,0 +1,33 @@
+﻿@page "/"
+@attribute [StreamRendering]
+
+
+<PageTitle>Jacustran</PageTitle>
+
+<h1 class="h1 text-center m-5">Jacustran Home</h1>
+
+<ProductList @rendermode=@RenderMode.InteractiveAuto />
+
+@* <button type="button" @onclick="ClickHandler">click me</button>
+
+<p>@str</p>
+
+
+<p>@streamPlaceholder</p>
+    
+@code {
+    public void ClickHandler()
+    {
+        Console.WriteLine("Button clicked");
+        str = "Button clicked";
+    }
+
+    public string str = "Hello World";
+    public string streamPlaceholder = "Loading...";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(2000);
+        streamPlaceholder = "Loaded";
+    }
+} *@
