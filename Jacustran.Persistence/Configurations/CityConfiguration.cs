@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Jacustran.Persistence.Configurations;
 
-namespace Jacustran.Persistence.Configurations
+public class CityConfiguration : IEntityTypeConfiguration<City>
 {
-    internal class CityConfiguration
+    public void Configure(EntityTypeBuilder<City> builder)
     {
+        builder.Property(p => p.Name)
+            .IsRequired()
+            .HasMaxLength(50);
     }
 }

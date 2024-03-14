@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+namespace Jacustran.Persistence.Configurations;
 
-namespace Jacustran.Persistence.Configurations
+public class ProductsConfiguration : IEntityTypeConfiguration<Product>
 {
-    internal class ProductsConfiguration
+    public void Configure(EntityTypeBuilder<Product> builder)
     {
+        builder.Property(p => p.Name)
+            .IsRequired()
+            .HasMaxLength(50);
     }
 }

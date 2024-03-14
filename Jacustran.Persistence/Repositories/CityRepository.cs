@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Jacustran.Persistence.Repositories;
 
-namespace Jacustran.Persistence.Repositories
+public class CityRepository(JacustranDbContext context) : BaseRepository<City>(context), ICityRepository
 {
-    internal class CityRepository
-    {
-    }
+
 }

@@ -1,13 +1,14 @@
 ﻿
 namespace Jacustran.Persistence.Repositories;
 
-public class BaseRepository<T> : IAsyncRepository<T> where T : EntityBase
+public class BaseRepository<T>(JacustranDbContext context) : IAsyncRepository<T> where T : EntityBase
 {
-    private readonly JacustranDbContext _context;
+    protected readonly JacustranDbContext _context = context;
 
-    public Task<IReadOnlyList<T>> GetAllAsync()
+
+    public async Task<IReadOnlyList<T>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return await _context.Set<T>().ToListAsync();
     }
 
     public Task<T> AddAsync(T entity)
