@@ -23,7 +23,7 @@ public class JacustranDbContext : DbContext
         modelBuilder.Entity<City>().HasData(
                 new City
                 { 
-                    Id = Guid.Parse("ab1fd609-d754-4feb-8acd-c4f9ff13ba96"),
+                    Id = Guid.Parse("af1fd609-d754-4feb-8acd-c4f9ff13ba96"),
                     Name = "Kyoto",
                     Description = "Kyoto is the culural capital of japan",
                     Population = 1_475_000,
@@ -32,7 +32,7 @@ public class JacustranDbContext : DbContext
                 },
                 new City
                 {
-                    Id = Guid.Parse("jdueiow8-d754-4feb-8acd-c4f9ff13ba96"),
+                    Id = Guid.Parse("fdbead28-d754-4feb-8acd-c4f9ff13ba96"),
                     Name = "Tokyo",
                     Description = "Tokyo is a megacity",
                     Population = 13_960_000,
@@ -41,10 +41,10 @@ public class JacustranDbContext : DbContext
                 },
                 new City
                 {
-                    Id = Guid.Parse("aiu38e7r-d754-4feb-8acd-c4f9ff13ba96"),
+                    Id = Guid.Parse("ac338e7a-d754-4feb-8acd-c4f9ff13ba96"),
                     Name = "Osaka",
-                    Description = "Osaka lies in the kanto area",
                     Population = 2_691_000,
+                    Description = "Osaka lies in the kanto area",
                     ImageUrl = "https://dummyimage.com/600x400/eee/aaa",
                     IsImportantCity = true
                 });

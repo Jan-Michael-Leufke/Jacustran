@@ -13,7 +13,8 @@ public static class ApplicationServiceRegistrations
     public static IServiceCollection RegisterApplicationServices(this IServiceCollection services)
     {
 
-        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        var result = (AppDomain.CurrentDomain.GetAssemblies());
+        services.AddAutoMapper(result);
         services.AddMediatR(config => config.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
 
         return services;
