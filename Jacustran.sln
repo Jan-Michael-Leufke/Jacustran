@@ -17,6 +17,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Jacustran.Domain", "Jacustran.Domain\Jacustran.Domain.csproj", "{86B2A6C9-6E29-4536-847A-E32622FDDA89}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jacustran.Application", "Jacustran.Application\Jacustran.Application.csproj", "{A45CA8C5-A899-4196-838A-845F761642AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jacustran.Persistence", "Jacustran.Persistence\Jacustran.Persistence.csproj", "{69568E94-1A6C-4246-A843-C72F54237B4A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +39,14 @@ Global
 		{86B2A6C9-6E29-4536-847A-E32622FDDA89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86B2A6C9-6E29-4536-847A-E32622FDDA89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86B2A6C9-6E29-4536-847A-E32622FDDA89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A45CA8C5-A899-4196-838A-845F761642AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A45CA8C5-A899-4196-838A-845F761642AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A45CA8C5-A899-4196-838A-845F761642AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A45CA8C5-A899-4196-838A-845F761642AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69568E94-1A6C-4246-A843-C72F54237B4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69568E94-1A6C-4246-A843-C72F54237B4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69568E94-1A6C-4246-A843-C72F54237B4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69568E94-1A6C-4246-A843-C72F54237B4A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -46,6 +58,8 @@ Global
 		{5DB1553D-3726-434B-8AA0-D6916D9C8865} = {48E8CD4E-93F8-4E5B-B751-E6E41D35E24F}
 		{8E2C3A0C-900E-4102-9125-EE81C34FEA7F} = {48E8CD4E-93F8-4E5B-B751-E6E41D35E24F}
 		{86B2A6C9-6E29-4536-847A-E32622FDDA89} = {5DB1553D-3726-434B-8AA0-D6916D9C8865}
+		{A45CA8C5-A899-4196-838A-845F761642AC} = {5DB1553D-3726-434B-8AA0-D6916D9C8865}
+		{69568E94-1A6C-4246-A843-C72F54237B4A} = {8E2C3A0C-900E-4102-9125-EE81C34FEA7F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F19D146F-9D6A-4CAA-A39C-46E35AC211F9}

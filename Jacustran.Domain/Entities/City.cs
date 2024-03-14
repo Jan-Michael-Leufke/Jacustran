@@ -1,4 +1,5 @@
 ﻿using Jacustran.Domain.Models.Statics;
+using Jacustran.Domain.Shared;
 using System.Security.Cryptography;
 
 namespace Jacustran.Domain.Entities;

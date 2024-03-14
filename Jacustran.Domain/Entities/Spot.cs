@@ -1,4 +1,5 @@
 ﻿using Jacustran.Domain.Models.Enumerations;
+using Jacustran.Domain.Shared;
 
 namespace Jacustran.Domain.Entities;
 

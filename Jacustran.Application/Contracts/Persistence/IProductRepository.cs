@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Jacustran.Domain.Entities;
 
-namespace Jacustran.Application.Contracts.Persistence
+namespace Jacustran.Application.Contracts.Persistence;
+
+public interface IProductRepository : IAsyncRepository<Product>
 {
-    internal interface IProductRepository
-    {
-    }
 }
