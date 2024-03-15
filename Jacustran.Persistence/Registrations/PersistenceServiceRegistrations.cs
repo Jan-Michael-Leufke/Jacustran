@@ -1,5 +1,5 @@
-﻿global using Jacustran.Domain.Entities;
-global using Jacustran.Domain.Shared;
+﻿global using Jacustran.Domain.Entity.Entities;
+global using Jacustran.Domain.Entity.Shared;
 global using Jacustran.Application.Contracts.Persistence;
 global using Jacustran.Persistence.DbContexts;
 global using Microsoft.EntityFrameworkCore;
@@ -26,7 +26,7 @@ public static class PersistenceServiceRegistrations
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<ISpotRepository, SpotRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();
-        //services.AddScoped<IUnitOfWork, JacustranDbContext>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
     }

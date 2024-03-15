@@ -1,4 +1,5 @@
 ﻿
+using Jacustran.Domain.Entity.Entities;
 using Microsoft.AspNetCore.Components;
 using System.Net.Http.Json;
 

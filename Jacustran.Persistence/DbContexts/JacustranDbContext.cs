@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Jacustran.Domain.Entity.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Jacustran.Persistence.DbContexts;
 
-public class JacustranDbContext : DbContext, IUnitOfWork
+public class JacustranDbContext : DbContext //, IUnitOfWork
 {
     public JacustranDbContext(DbContextOptions<JacustranDbContext> options) : base(options)
     {
@@ -82,24 +83,24 @@ public class JacustranDbContext : DbContext, IUnitOfWork
 
    
 
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-    {
-        foreach (var entry in ChangeTracker.Entries<EntityBase>())
-        {
-            switch (entry.State)
-            {
-                case EntityState.Added:
-                    entry.Entity.CreatedDate = DateTime.Now;
-                    entry.Entity.CreatedBy = "Jacustran";
-                    break;
-                case EntityState.Modified:
-                    entry.Entity.LastModifiedDate = DateTime.Now;
-                    entry.Entity.LastModifiedBy = "Jacustran";
-                    break;
-            }
-        }
+    //public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    //{
+    //    foreach (var entry in ChangeTracker.Entries<EntityBase>())
+    //    {
+    //        switch (entry.State)
+    //        {
+    //            case EntityState.Added:
+    //                entry.Entity.CreatedDate = DateTime.Now;
+    //                entry.Entity.CreatedBy = "Jacustran";
+    //                break;
+    //            case EntityState.Modified:
+    //                entry.Entity.LastModifiedDate = DateTime.Now;
+    //                entry.Entity.LastModifiedBy = "Jacustran";
+    //                break;
+    //        }
+    //    }
 
-        return base.SaveChangesAsync(cancellationToken);
-    }
+    //    return base.SaveChangesAsync(cancellationToken);
+    //}
 
 }

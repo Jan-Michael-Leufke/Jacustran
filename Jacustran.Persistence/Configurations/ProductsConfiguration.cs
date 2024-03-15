@@ -1,4 +1,6 @@
 ﻿
+using Jacustran.Domain.Entity.Entities;
+
 namespace Jacustran.Persistence.Configurations;
 
 public class ProductsConfiguration : IEntityTypeConfiguration<Product>

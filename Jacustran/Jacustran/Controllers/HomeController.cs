@@ -1,5 +1,6 @@
 ﻿
 
+using Jacustran.Domain.Entity.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Jacustran.Controllers;

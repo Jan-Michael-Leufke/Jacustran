@@ -1,7 +1,7 @@
 ﻿global using AutoMapper;
 global using MediatR;
-global using Jacustran.Domain.Entities;
-global using Jacustran.Domain.Shared;
+global using Jacustran.Domain.Entity.Entities;
+global using Jacustran.Domain.Entity.Shared;
 global using Jacustran.Application.Contracts.Persistence;
 global using Jacustran.Domain.Responses;
 

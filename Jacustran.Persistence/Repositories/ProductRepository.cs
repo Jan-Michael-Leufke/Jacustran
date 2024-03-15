@@ -1,4 +1,6 @@
 ﻿
+using Jacustran.Domain.Entity.Entities;
+
 namespace Jacustran.Persistence.Repositories;
 
 public class ProductRepository(JacustranDbContext context) : BaseRepository<Product>(context), IProductRepository

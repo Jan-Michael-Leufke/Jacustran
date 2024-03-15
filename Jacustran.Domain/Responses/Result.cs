@@ -1,83 +1,49 @@
-﻿using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace Jacustran.Domain.Responses;
+﻿namespace Jacustran.Domain.Responses;
 
 
 public class Result
 {
-    public bool IsSuccess { get; set; }
+    public bool IsSuccess { get; }
     public bool IsFailure => !IsSuccess;
-    public string? Message { get; set; }
-    public string? ErrorCode { get; set; }
-    public string? ErrorDetails { get; set; }
+    public Error Error { get; }
 
-    public Result(bool isSuccess, string? message, string? errorCode, string? errorDetails)
+    private Result(bool isSuccess, Error error)
     {
+        if (isSuccess && error != Error.None || !isSuccess && error == Error.None)
+            throw new InvalidOperationException("Invalid Error Type");
+
         IsSuccess = isSuccess;
-        Message = message;
-        ErrorCode = errorCode;
-        ErrorDetails = errorDetails;
+        Error = error;
     }
 
-    public static Result Success(string? message = null)
-    {
-        return new Result(true, message, null, null);
-    }
-    public static Result Failure(string errorCode, string? message = null, string? errorDetails = null)
-    {
-        return new Result(false, message, errorCode, errorDetails);
-    }
+    public static Result Success() => new(true, Error.None);
+    public static Result Failure(Error error) => new(false, error);
+    
 }
 
 
 public class Result<T>
 {
-    public T Data { get; set; }
-    public bool IsSuccess { get; set; }
+    public T Data { get; }
+    public bool IsSuccess { get; }
     public bool IsFailure => !IsSuccess;
-    public string? Message { get; set; }
-    public string? ErrorCode { get; set; }
-    public string? ErrorDetails { get; set; }
-    public Result(T data, bool isSuccess, string? message, string? errorCode, string? errorDetails)
+    public Error Error { get; }
+    
+    private Result(T data, bool isSuccess, Error error)
     {
         Data = data;
         IsSuccess = isSuccess;
-        Message = message;
-        ErrorCode = errorCode;
-        ErrorDetails = errorDetails;
-    }
-    public static Result<T> Success(T data, string? message = null)
-    {
-        return new Result<T>(data, true, message, null, null);
-    }
-    public static Result<T> Failure(string errorCode, string? message = null, string? errorDetails = null)
-    {
-        return new Result<T>(default!, false, message, errorCode, errorDetails);
-    }
-    public static Result<T> Failure(string errorCode, T data, string? message = null, string? errorDetails = null)
-    {
-        return new Result<T>(data, false, message, errorCode, errorDetails);
-    }
-    public static Result<T> Failure(string errorCode, T data, string? message = null)
-    {
-        return new Result<T>(data, false, message, errorCode, null);
-    }
-    public static Result<T> Failure(string errorCode)
-    {
-        return new Result<T>(default!, false, null, errorCode, null);
-    }
-    public static Result<T> Failure(string errorCode, string? message = null)
-    {
-        return new Result<T>(default!, false, message, errorCode, null);
+        Error = error;
     }
 
 
-    //public static implicit operator Result<T>(Result result)
-    //{
-    //    return new Result<T>(default!, result.IsSuccess, result.Message, result.ErrorCode, result.ErrorDetails);
-    //}
-    //public static implicit operator Result(Result<T> result)
-    //{
-    //    return new Result(result.Data, result.IsSuccess, result.Message, result.ErrorCode, result.Error)
-    //}
+    public static Result<T> Success(T data) => new(data, true, Error.None);
+    public static Result<T> Failure(Error error) => new(default!, false, error);
+
+
+
+    public static implicit operator Result<T>(Result result) => new(default!, result.IsSuccess, result.Error);
+
+    public static implicit operator Result(Result<T> result) => result.IsSuccess ? Result.Success() : Result.Failure(result.Error);
+    
 }

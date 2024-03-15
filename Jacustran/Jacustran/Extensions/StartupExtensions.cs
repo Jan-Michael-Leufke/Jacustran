@@ -1,9 +1,9 @@
 ﻿using FluentValidation.AspNetCore;
 using Jacustran.Application.Registrations;
 using Jacustran.Components;
+using Jacustran.Middleware.ExceptionsHandling;
 using Jacustran.Persistence.DbContexts;
 using Jacustran.Persistence.Registrations;
-using Jacustran.Presentation.Controllers;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -39,6 +39,9 @@ public static class StartupExtensions
         builder.Services.AddScoped<HttpClient>(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7248") });
         builder.Services.AddHttpContextAccessor();
 
+        builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+        builder.Services.AddProblemDetails();
+
         builder.Services.AddCors(setup =>
         {
             setup.AddPolicy("blazor", policy =>
@@ -62,7 +65,7 @@ public static class StartupExtensions
             setup.SwaggerDoc("v1", new() { Title = "Jacustran API", Version = "v1", Description = "Colletions of Endpoints for Jacustran related Data-Fetching used in the context of SPAs." });
         });
 
-
+        
         return builder.Build();
     }
     public static WebApplication ConfigurePipeline(this WebApplication app)
@@ -92,6 +95,11 @@ public static class StartupExtensions
         }
 
         app.UseHttpsRedirection();
+
+
+        app.UseMiddleware<CustomExceptionHandlingMiddleware>();
+        //app.UseExceptionHandler();
+
         app.UseStaticFiles();
         app.UseRouting();
         //app.UseAuthentication();

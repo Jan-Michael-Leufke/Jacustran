@@ -1,5 +1,5 @@
-﻿global using Jacustran.Domain.Entities;
-global using Jacustran.Domain.Shared;
+﻿global using Jacustran.Domain.Entity.Entities;
+global using Jacustran.Domain.Entity.Shared;
 
 using Microsoft.Extensions.DependencyInjection;
 

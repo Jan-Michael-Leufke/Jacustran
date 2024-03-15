@@ -1,6 +1,4 @@
-﻿
-
-namespace Jacustran.Persistence.Repositories;
+﻿namespace Jacustran.Persistence.Repositories;
 
 public class BaseRepository<T>(JacustranDbContext context) : IAsyncRepository<T> where T : EntityBase
 {

@@ -1,4 +1,6 @@
-﻿namespace Jacustran.Persistence.Configurations;
+﻿using Jacustran.Domain.Entity.Entities;
+
+namespace Jacustran.Persistence.Configurations;
 
 public class SpotConfiguration : IEntityTypeConfiguration<Spot>
 {

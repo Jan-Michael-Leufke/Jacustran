@@ -1,5 +1,5 @@
-global using Jacustran.Domain.Entities;
-global using Jacustran.Domain.Shared;
+global using Jacustran.Domain.Entity.Entities;
+global using Jacustran.Domain.Entity.Shared;
 
 using Jacustran.Client.Components.PageComponents;
 using Jacustran.Components;
@@ -11,6 +11,6 @@ var app = builder.ConfigureServices();
 
 app.ConfigurePipeline();
 
-await app.ResetDatabaseAsync();
+//await app.ResetDatabaseAsync();
 
 app.Run();

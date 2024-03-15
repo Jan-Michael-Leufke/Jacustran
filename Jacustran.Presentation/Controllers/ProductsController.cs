@@ -1,4 +1,5 @@
-﻿using Jacustran.Presentation.Controllers;
+﻿using Jacustran.Domain.Entity.Entities;
+using Jacustran.Presentation.Controllers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;

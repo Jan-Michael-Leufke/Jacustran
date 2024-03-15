@@ -1,8 +1,6 @@
-﻿using Jacustran.Domain.Statics;
-using Jacustran.Domain.Shared;
-using System.Security.Cryptography;
+﻿using Jacustran.Domain.Entity.Shared;
 
-namespace Jacustran.Domain.Entities;
+namespace Jacustran.Domain.Entity.Entities;
 
 public class City(string name) : Town(name)
 {

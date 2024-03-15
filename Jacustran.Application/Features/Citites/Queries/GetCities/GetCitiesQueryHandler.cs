@@ -1,5 +1,6 @@
 ﻿
 using Jacustran.Application.Contracts.Abstractions.MediatR;
+using Jacustran.Domain.Entity.Entities;
 
 
 namespace Jacustran.Application.Features.Citites.Queries.GetCities;

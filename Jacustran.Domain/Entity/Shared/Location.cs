@@ -1,4 +1,4 @@
-﻿namespace Jacustran.Domain.Shared;
+﻿namespace Jacustran.Domain.Entity.Shared;
 
 public class Location(string name) : EntityBase
 {

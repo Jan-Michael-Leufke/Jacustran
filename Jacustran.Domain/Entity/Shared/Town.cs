@@ -1,6 +1,6 @@
-﻿using Jacustran.Domain.Entities;
+﻿using Jacustran.Domain.Entity.Entities;
 
-namespace Jacustran.Domain.Shared;
+namespace Jacustran.Domain.Entity.Shared;
 
 public class Town(string name) : Location(name)
 {

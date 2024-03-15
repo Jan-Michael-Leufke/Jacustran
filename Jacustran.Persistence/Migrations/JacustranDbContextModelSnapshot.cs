@@ -50,7 +50,7 @@ namespace Jacustran.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Jacustran.Domain.Entities.Product", b =>
@@ -92,7 +92,7 @@ namespace Jacustran.Persistence.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("Jacustran.Domain.Entities.Spot", b =>
@@ -134,7 +134,7 @@ namespace Jacustran.Persistence.Migrations
 
                     b.HasIndex("TownId");
 
-                    b.ToTable("Spots");
+                    b.ToTable("Spots", (string)null);
                 });
 
             modelBuilder.Entity("Jacustran.Domain.Shared.Town", b =>
@@ -176,7 +176,7 @@ namespace Jacustran.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Town");
+                    b.ToTable("Town", (string)null);
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Town");
 
