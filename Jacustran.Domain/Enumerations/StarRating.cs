@@ -1,4 +1,4 @@
-﻿namespace Jacustran.Domain.Models.Enumerations;
+﻿namespace Jacustran.Domain.Enumerations;
 
 public enum StarRating
 {

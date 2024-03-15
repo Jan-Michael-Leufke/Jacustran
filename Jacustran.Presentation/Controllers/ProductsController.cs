@@ -1,16 +1,27 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Jacustran.Presentation.Controllers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace Jacustran.Controllers;
 
+/// <summary>
+/// The ProductsController class
+/// </summary>
 [Route("api/[controller]")]
 [ApiController]
 public class ProductsController : ControllerBase
 {
+    /// <summary>
+    /// Get all Products
+    /// </summary>
+    /// param name="cancellationToken">The cancellation token</param>
+    /// <returns>All Products an DTOs</returns>
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+    [ProducesResponseType(typeof(IEnumerable<Product>) , StatusCodes.Status200OK)]
+    public async Task<ActionResult<IEnumerable<Product>>> GetProducts(CancellationToken cancellationToken)
     {
+        
         return Ok(_products);
     }
 

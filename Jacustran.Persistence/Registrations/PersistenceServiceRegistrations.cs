@@ -26,6 +26,7 @@ public static class PersistenceServiceRegistrations
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<ISpotRepository, SpotRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();
+        //services.AddScoped<IUnitOfWork, JacustranDbContext>();
 
         return services;
     }

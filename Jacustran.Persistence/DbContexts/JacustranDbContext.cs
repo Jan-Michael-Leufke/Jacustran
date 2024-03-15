@@ -2,16 +2,16 @@
 
 namespace Jacustran.Persistence.DbContexts;
 
-public class JacustranDbContext : DbContext
+public class JacustranDbContext : DbContext, IUnitOfWork
 {
     public JacustranDbContext(DbContextOptions<JacustranDbContext> options) : base(options)
     {
     }
 
     public DbSet<Product> Products { get; set; }
-    //public DbSet<Category> Categories { get; set; }
-    //public DbSet<City> Cities { get; set; }
-    //public DbSet<Spot> Spots { get; set; }
+    public DbSet<Category> Categories { get; set; }
+    public DbSet<City> Cities { get; set; }
+    public DbSet<Spot> Spots { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -21,8 +21,8 @@ public class JacustranDbContext : DbContext
         // Seed data for testing
 
         modelBuilder.Entity<City>().HasData(
-                new City
-                { 
+                new City()
+                {
                     Id = Guid.Parse("af1fd609-d754-4feb-8acd-c4f9ff13ba96"),
                     Name = "Kyoto",
                     Description = "Kyoto is the culural capital of japan",
@@ -80,13 +80,13 @@ public class JacustranDbContext : DbContext
         base.OnModelCreating(modelBuilder);
     }
 
+   
 
-
-public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         foreach (var entry in ChangeTracker.Entries<EntityBase>())
         {
-            switch(entry.State)
+            switch (entry.State)
             {
                 case EntityState.Added:
                     entry.Entity.CreatedDate = DateTime.Now;

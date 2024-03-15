@@ -1,4 +1,4 @@
-﻿namespace Jacustran.Domain.Models.Statics;
+﻿namespace Jacustran.Domain.Statics;
 
 public static class DomainStatics
 {

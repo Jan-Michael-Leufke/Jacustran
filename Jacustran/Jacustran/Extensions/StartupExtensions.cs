@@ -1,8 +1,11 @@
-﻿using Jacustran.Application.Registrations;
+﻿using FluentValidation.AspNetCore;
+using Jacustran.Application.Registrations;
 using Jacustran.Components;
 using Jacustran.Persistence.DbContexts;
 using Jacustran.Persistence.Registrations;
+using Jacustran.Presentation.Controllers;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 namespace Jacustran.Extensions;
 
@@ -10,6 +13,14 @@ public static class StartupExtensions
 {
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder) 
     {
+        builder.Host.UseSerilog((context, services, configuration) =>
+        {
+            configuration.ReadFrom.Configuration(context.Configuration)
+                         .ReadFrom.Services(services)
+                         .Enrich.FromLogContext()
+                         .WriteTo.Console();
+        }, preserveStaticLogger : true, writeToProviders : false);
+
         builder.Services.RegisterApplicationServices()
                         .RegisterPersistenceServices(builder.Configuration);
 
@@ -19,8 +30,14 @@ public static class StartupExtensions
             .AddInteractiveServerComponents()
             .AddInteractiveWebAssemblyComponents();
 
-        builder.Services.AddControllers();
+        builder.Services.AddControllers()
+                        .AddApplicationPart(Presentation.Registrations.AssemblyReference.Get);
+
+        builder.Services.AddFluentValidationAutoValidation()
+                        .AddFluentValidationClientsideAdapters();
+
         builder.Services.AddScoped<HttpClient>(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7248") });
+        builder.Services.AddHttpContextAccessor();
 
         builder.Services.AddCors(setup =>
         {
@@ -35,10 +52,10 @@ public static class StartupExtensions
             setup.AddPolicy("access", policy =>
             {
                 policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-            }); 
         });
 
 
+            }); 
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen(setup =>
         {
@@ -48,18 +65,20 @@ public static class StartupExtensions
 
         return builder.Build();
     }
-
     public static WebApplication ConfigurePipeline(this WebApplication app)
+
     {
         app.UseCors("blazor");  
+
+        app.UseSerilogRequestLogging();
 
         app.UseSwagger();
         app.UseSwaggerUI(setup =>
         {
             setup.SwaggerEndpoint("/swagger/v1/swagger.json", "Jacustran API V1");
             setup.RoutePrefix = "swagger";
-        });
 
+        });
 
         if (app.Environment.IsDevelopment())
         {
@@ -72,7 +91,6 @@ public static class StartupExtensions
             app.UseHsts();
         }
 
-
         app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseRouting();
@@ -80,6 +98,7 @@ public static class StartupExtensions
         //app.UseAuthorization();
         app.UseAntiforgery();
         app.MapControllers();
+        
         
 
         app.MapRazorComponents<App>()
