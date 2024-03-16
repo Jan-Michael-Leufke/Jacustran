@@ -1,13 +1,23 @@
 ﻿global using AutoMapper;
 global using MediatR;
-global using Jacustran.Domain.Entity.Entities;
-global using Jacustran.Domain.Entity.Shared;
-global using Jacustran.Application.Contracts.Persistence;
-global using Jacustran.Domain.Responses;
+global using FluentValidation;
+
+global using Jacustran.Domain.Products;
+global using Jacustran.Domain.Categories;
+global using Jacustran.Domain.Cities;
+global using Jacustran.Domain.Spots;
+global using Jacustran.Domain.Shared;
+
+global using Jacustran.Shared.Responses;
+global using Jacustran.Shared.Exceptions;
+global using Jacustran.Shared.Contracts;
+global using Jacustran.Shared.Enumerations;
+
+global using Jacustran.Application.Contracts.Application.MediatR;
+
 
 using Microsoft.Extensions.DependencyInjection;
-using FluentValidation;
-using System.Reflection;
+using System.Security;
 
 namespace Jacustran.Application.Registrations;
 
@@ -18,8 +28,13 @@ public static class ApplicationServiceRegistrations
         var currentAppDomainAssemblies = AppDomain.CurrentDomain.GetAssemblies();
 
         services.AddAutoMapper(currentAppDomainAssemblies);
-        services.AddMediatR(config => config.RegisterServicesFromAssemblies(currentAppDomainAssemblies));
-        services.AddValidatorsFromAssemblies(currentAppDomainAssemblies);
+        services.AddMediatR(config =>
+        {
+            config.RegisterServicesFromAssemblies(currentAppDomainAssemblies);
+            config.AddBehavior(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehaviour<,>));
+        });
+
+        services.AddValidatorsFromAssembly(AssemblyReference.Get);
 
         return services;
     }

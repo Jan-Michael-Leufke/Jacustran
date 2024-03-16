@@ -1,15 +1,11 @@
-﻿using FluentValidation;
-using Jacustran.Application.Contracts.Abstractions.MediatR;
-using Jacustran.Application.Features.Citites.Shared.Errors;
-
-namespace Jacustran.Application.Features.Citites.Commands.CreateCity;
+﻿namespace Jacustran.Application.Features.Citites.Commands.CreateCity;
 
 public class CreateCityCommandHandler : ICommandHandler<CreateCityCommand, Guid>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IAsyncRepository<City> _cityRepository;
     private readonly IMapper _mapper;
-    private readonly IValidator<CreateCityCommand> _validator;
+    //private readonly IValidator<CreateCityCommand> _validator;
 
     public CreateCityCommandHandler
        (IAsyncRepository<City> cityRepository, 
@@ -20,14 +16,14 @@ public class CreateCityCommandHandler : ICommandHandler<CreateCityCommand, Guid>
         _cityRepository = cityRepository;
         _mapper = mapper;
         _unitOfWork = unitOfWork;
-        _validator = validator;
+        //_validator = validator;
     }
 
     public async Task<Result<Guid>> Handle(CreateCityCommand command, CancellationToken cancellationToken)
-    {
-        var validationResult = await _validator.ValidateAsync(command, cancellationToken);
+    {        
+        //var validationResult = await _validator.ValidateAsync(command, cancellationToken);
         
-        if (!validationResult.IsValid) return CityErrors.FluentValidationError.ToResult();
+        //if (!validationResult.IsValid) return CityErrors.FluentValidationError.ToResult();
        
         var newCityEntity = _mapper.Map<City>(command);
 

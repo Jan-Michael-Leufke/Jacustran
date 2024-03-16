@@ -1,10 +1,7 @@
-﻿using Jacustran.Domain.Entity.Entities;
-using Jacustran.Presentation.Controllers;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 
-namespace Jacustran.Controllers;
+namespace Jacustran.Presentation.Controllers;
 
 /// <summary>
 /// The ProductsController class

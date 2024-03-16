@@ -1,6 +1,4 @@
-﻿using FluentValidation;
-
-namespace Jacustran.Application.Features.Citites.Commands.CreateCity;
+﻿namespace Jacustran.Application.Features.Citites.Commands.CreateCity;
 
 public class CreateCityCommandValidator : AbstractValidator<CreateCityCommand>
 {

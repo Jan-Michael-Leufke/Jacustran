@@ -1,5 +1,4 @@
-﻿
-using Jacustran.Domain.Entity.Entities;
+﻿using Jacustran.Domain.Products;
 
 namespace Jacustran.Persistence.Configurations;
 

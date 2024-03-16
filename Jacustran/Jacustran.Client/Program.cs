@@ -1,5 +1,3 @@
-global using Jacustran.Domain.Entity.Entities;
-
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);

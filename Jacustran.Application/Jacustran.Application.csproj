@@ -7,19 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Contracts\Application\" />
     <Folder Include="Contracts\Infrastructure\" />
     <Folder Include="Contracts\Interface\" />
-    <Folder Include="Errors\" />
+    <Folder Include="Contracts\Persistence\" />
     <Folder Include="Features\Categories\Commands\" />
     <Folder Include="Features\Categories\Queries\" />
     <Folder Include="Features\Products\Commands\" />
-    <Folder Include="Features\Spots\Commands\" />
-    <Folder Include="Features\Spots\Queries\" />
     <Folder Include="Models\" />
-    <Folder Include="Responses\" />
     <Folder Include="Services\" />
-    <Folder Include="Validation\" />
   </ItemGroup>
 
   <ItemGroup>

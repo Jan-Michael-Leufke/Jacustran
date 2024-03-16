@@ -1,6 +1,5 @@
 ﻿using Jacustran.Application.Features.Citites.Commands.CreateCity;
 using Jacustran.Application.Features.Citites.Queries.GetCities;
-using Jacustran.Domain.Entity.Entities;
 
 namespace Jacustran.Application.Profiles;
 

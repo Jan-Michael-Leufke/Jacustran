@@ -1,13 +1,9 @@
-﻿using Jacustran.Domain.Entity.Entities;
-using Microsoft.EntityFrameworkCore;
-
-namespace Jacustran.Persistence.DbContexts;
+﻿namespace Jacustran.Persistence.DbContexts;
 
 public class JacustranDbContext : DbContext //, IUnitOfWork
 {
     public JacustranDbContext(DbContextOptions<JacustranDbContext> options) : base(options)
-    {
-    }
+    { }
 
     public DbSet<Product> Products { get; set; }
     public DbSet<Category> Categories { get; set; }
@@ -52,31 +48,31 @@ public class JacustranDbContext : DbContext //, IUnitOfWork
 
 
 
-        //modelBuilder.Entity<Spot>().HasData(
-        //    new Spot
-        //    {
-        //        Id = Guid.Parse("spot-guid-1"),
-        //        Name = "Spot 1",
-        //        Description = "This is Spot 1",
-        //        CityId = Guid.Parse("city-guid-1"),
-        //        ImageUrl = "https://dummyimage.com/600x400/eee/aaa"
-        //    },
-        //    new Spot
-        //    {
-        //        Id = Guid.Parse("spot-guid-2"),
-        //        Name = "Spot 2",
-        //        Description = "This is Spot 2",
-        //        CityId = Guid.Parse("city-guid-2"),
-        //        ImageUrl = "https://dummyimage.com/600x400/eee/aaa"
-        //    },
-        //    new Spot
-        //    {
-        //        Id = Guid.Parse("spot-guid-3"),
-        //        Name = "Spot 3",
-        //        Description = "This is Spot 3",
-        //        CityId = Guid.Parse("city-guid-3"),
-        //        ImageUrl = "https://dummyimage.com/600x400/eee/aaa"
-        //    });
+        modelBuilder.Entity<Spot>().HasData(
+            new Spot
+            {
+                Id = Guid.Parse("af871625-d754-4feb-8acd-c4f9ff13ba96"),
+                Name = "Kiyomizu",
+                Description = "An ancient Temple with a stunning View over Kyoto.",
+                TownId = Guid.Parse("af1fd609-d754-4feb-8acd-c4f9ff13ba96"),
+                ImageUrl = "https://dummyimage.com/600x400/eee/aaa"
+            },
+            new Spot
+            {
+                Id = Guid.Parse("9384adfa-d754-4feb-8acd-c4f9ff13ba96"),
+                Name = "Oyamazaki",
+                Description = "A Neighbourhood with a certain melancholic feel.",
+                TownId = Guid.Parse("af1fd609-d754-4feb-8acd-c4f9ff13ba96"),
+                ImageUrl = "https://dummyimage.com/600x400/eee/aaa"
+            },
+            new Spot
+            {
+                Id = Guid.Parse("8374adda-d754-4feb-8acd-c4f9ff13ba96"),
+                Name = "Umeda",
+                Description = "It´s a train station but also much more than that.",
+                TownId = Guid.Parse("ac338e7a-d754-4feb-8acd-c4f9ff13ba96"),
+                ImageUrl = "https://dummyimage.com/600x400/eee/aaa"
+            });
 
         base.OnModelCreating(modelBuilder);
     }

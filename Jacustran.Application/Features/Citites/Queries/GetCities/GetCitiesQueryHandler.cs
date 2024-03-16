@@ -1,9 +1,4 @@
-﻿
-using Jacustran.Application.Contracts.Abstractions.MediatR;
-using Jacustran.Domain.Entity.Entities;
-
-
-namespace Jacustran.Application.Features.Citites.Queries.GetCities;
+﻿namespace Jacustran.Application.Features.Citites.Queries.GetCities;
 
 public class GetCitiesQueryHandler : IQueryHandler<GetCitiesQuery, IEnumerable<GetCitiesVm>>
 {

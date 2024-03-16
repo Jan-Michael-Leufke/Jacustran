@@ -1,4 +1,4 @@
-﻿using Jacustran.Domain.Entity.Entities;
+﻿using Jacustran.Domain.Products;
 
 namespace Jacustran.Application.Features.Products.Queries.GetProducts;
 

@@ -1,9 +1,11 @@
 ﻿using FluentValidation.AspNetCore;
+using Jacustran.Application.Contracts.Application.MediatR;
 using Jacustran.Application.Registrations;
 using Jacustran.Components;
 using Jacustran.Middleware.ExceptionsHandling;
 using Jacustran.Persistence.DbContexts;
 using Jacustran.Persistence.Registrations;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -30,17 +32,21 @@ public static class StartupExtensions
             .AddInteractiveServerComponents()
             .AddInteractiveWebAssemblyComponents();
 
-        builder.Services.AddControllers()
-                        .AddApplicationPart(Presentation.Registrations.AssemblyReference.Get);
+        builder.Services.AddControllers(configure => configure.ReturnHttpNotAcceptable = true)
+                        .AddApplicationPart(Presentation.Registrations.AssemblyReference.Get)
+                        .AddXmlDataContractSerializerFormatters();
 
-        builder.Services.AddFluentValidationAutoValidation()
-                        .AddFluentValidationClientsideAdapters();
+
+        //builder.Services.AddFluentValidationAutoValidation(c => c.DisableDataAnnotationsValidation = true);
+                        //.AddFluentValidationClientsideAdapters();
+
+        //builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehaviour<,>));
 
         builder.Services.AddScoped<HttpClient>(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7248") });
         builder.Services.AddHttpContextAccessor();
 
-        builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
-        builder.Services.AddProblemDetails();
+        //builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+        //builder.Services.AddProblemDetails();
 
         builder.Services.AddCors(setup =>
         {
@@ -97,7 +103,7 @@ public static class StartupExtensions
         app.UseHttpsRedirection();
 
 
-        app.UseMiddleware<CustomExceptionHandlingMiddleware>();
+        //app.UseMiddleware<CustomExceptionHandlingMiddleware>();
         //app.UseExceptionHandler();
 
         app.UseStaticFiles();

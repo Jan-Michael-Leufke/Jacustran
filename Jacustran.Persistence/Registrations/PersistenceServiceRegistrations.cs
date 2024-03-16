@@ -1,6 +1,11 @@
-﻿global using Jacustran.Domain.Entity.Entities;
-global using Jacustran.Domain.Entity.Shared;
-global using Jacustran.Application.Contracts.Persistence;
+﻿global using Jacustran.Domain.Categories;
+global using Jacustran.Domain.Cities;
+global using Jacustran.Domain.Products;
+global using Jacustran.Shared.Contracts;
+global using Jacustran.Domain.Spots;
+global using Jacustran.Domain.Shared;
+global using Jacustran.Shared.Responses;
+
 global using Jacustran.Persistence.DbContexts;
 global using Microsoft.EntityFrameworkCore;
 global using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -9,6 +14,7 @@ global using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Jacustran.Persistence.Repositories;
+using Jacustran.Persistence.Abstractions;
 
 namespace Jacustran.Persistence.Registrations;
 
