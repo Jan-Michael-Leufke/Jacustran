@@ -7,7 +7,7 @@ public class Town(string name) : Location(name)
     public int Population { get; set; }
 
 
-    public ICollection<Spot>? Spots { get; set; } = new List<Spot>();
+    public ICollection<Spot> Spots { get; set; } = new List<Spot>();
 
 
 }

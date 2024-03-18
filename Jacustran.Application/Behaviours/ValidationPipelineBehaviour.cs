@@ -1,17 +1,17 @@
-﻿namespace Jacustran.Application.Contracts.Application.MediatR;
+﻿namespace Jacustran.Application.Behaviours;
 
 public class ValidationPipelineBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
         where TResponse : class
 {
     private readonly IEnumerable<IValidator<TRequest>> _validators;
-    public ValidationPipelineBehaviour(IEnumerable<IValidator<TRequest>> validators)  => _validators = validators;
-    
+    public ValidationPipelineBehaviour(IEnumerable<IValidator<TRequest>> validators) => _validators = validators;
+
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
 
         if (!_validators.Any()) return await next();
-        
+
         var validationContext = new ValidationContext<TRequest>(request);
         var validationResults = new List<ValidationResult>();
 

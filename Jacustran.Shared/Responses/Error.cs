@@ -8,4 +8,5 @@ public record Error(string errorCode, string? description = null)
     public static implicit operator Result(Error error) => Result.Failure(error);
 
     public Result ToResult() => Result.Failure(this);
+    public Result<T> ToResult<T>() => Result<T>.Failure(this);
 }

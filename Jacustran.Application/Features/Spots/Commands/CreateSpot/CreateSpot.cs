@@ -61,8 +61,8 @@ public static class CreateSpot
             RuleFor(p => p.ImageUrl)
                 .MaximumLength(200).WithMessage("{PropertyName} must not exceed 200 characters cpcv.");
 
-            RuleFor(p => p.Rating)
-                .NotEmpty().WithMessage("{PropertyName} is required cpcv.");
+            //RuleFor(p => p.Rating)
+                //.NotEmpty().WithMessage("{PropertyName} is required cpcv.");
         }
     }
 }

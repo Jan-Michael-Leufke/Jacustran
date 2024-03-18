@@ -1,6 +1,6 @@
 ﻿namespace Jacustran.Domain.Cities;
 
-public static class DomainStatics
+public static class CitiesStatics
 {
     public static List<string> ImportantCitiesList = new()
     {

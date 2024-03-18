@@ -14,10 +14,11 @@ global using Jacustran.Shared.Contracts;
 global using Jacustran.Shared.Enumerations;
 
 global using Jacustran.Application.Contracts.Application.MediatR;
-
+global using Jacustran.Application.Abstractions.MediatR;
 
 using Microsoft.Extensions.DependencyInjection;
 using System.Security;
+using Jacustran.Application.Behaviours;
 
 namespace Jacustran.Application.Registrations;
 

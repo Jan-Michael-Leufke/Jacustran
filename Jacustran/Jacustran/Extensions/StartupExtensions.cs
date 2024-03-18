@@ -6,8 +6,10 @@ using Jacustran.Middleware.ExceptionsHandling;
 using Jacustran.Persistence.DbContexts;
 using Jacustran.Persistence.Registrations;
 using MediatR;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using System.Xml;
 
 namespace Jacustran.Extensions;
 
@@ -32,9 +34,13 @@ public static class StartupExtensions
             .AddInteractiveServerComponents()
             .AddInteractiveWebAssemblyComponents();
 
-        builder.Services.AddControllers(configure => configure.ReturnHttpNotAcceptable = true)
-                        .AddApplicationPart(Presentation.Registrations.AssemblyReference.Get)
-                        .AddXmlDataContractSerializerFormatters();
+        builder.Services.AddControllers(configure =>
+        {
+            configure.ReturnHttpNotAcceptable = true;
+            configure.InputFormatters.Add(new XmlSerializerInputFormatter(new() { AllowEmptyInputInBodyModelBinding = true }));
+            configure.OutputFormatters.Add(new XmlDataContractSerializerOutputFormatter(new XmlWriterSettings() { }));
+        })
+       .AddApplicationPart(Presentation.Registrations.AssemblyReference.Get);
 
 
         //builder.Services.AddFluentValidationAutoValidation(c => c.DisableDataAnnotationsValidation = true);
@@ -45,8 +51,17 @@ public static class StartupExtensions
         builder.Services.AddScoped<HttpClient>(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7248") });
         builder.Services.AddHttpContextAccessor();
 
-        //builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
-        //builder.Services.AddProblemDetails();
+
+        builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+
+        builder.Services.AddProblemDetails(configure =>
+        {
+            //configure.CustomizeProblemDetails = context =>
+            //{
+            //    context.ProblemDetails.Extensions.Add("additional entry", "some info from customized Problemdetails");
+            //    context.ProblemDetails.Status = 777;
+            //};
+        });
 
         builder.Services.AddCors(setup =>
         {
@@ -91,11 +106,23 @@ public static class StartupExtensions
 
         if (app.Environment.IsDevelopment())
         {
-            app.UseWebAssemblyDebugging();
+            app.UseExceptionHandler();
+            //app.UseWebAssemblyDebugging();
+            //app.UseDeveloperExceptionPage();
         }
         else
         {
-            app.UseExceptionHandler("/Error", createScopeForErrors: true);
+            app.UseExceptionHandler(appBuilder =>
+            {
+                appBuilder.Run(async context =>
+                {
+                    context.Response.StatusCode = 500;
+                    await context.Response.WriteAsync("An Unexpected Error occured, handled from StartUp Exceptionhandler Delegate");
+                });
+            });
+
+
+            //app.UseExceptionHandler("/Error", createScopeForErrors: true);
             // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
         }
@@ -104,7 +131,6 @@ public static class StartupExtensions
 
 
         //app.UseMiddleware<CustomExceptionHandlingMiddleware>();
-        //app.UseExceptionHandler();
 
         app.UseStaticFiles();
         app.UseRouting();

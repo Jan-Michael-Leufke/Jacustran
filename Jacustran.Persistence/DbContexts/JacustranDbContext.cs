@@ -67,6 +67,14 @@ public class JacustranDbContext : DbContext //, IUnitOfWork
             },
             new Spot
             {
+                Id = Guid.Parse("9287afff-d754-4feb-8acd-c4f9ff13ba96"),
+                Name = "Kinkakuji Temple",
+                Description = "Colorful and with antique wooden structures ",
+                TownId = Guid.Parse("af1fd609-d754-4feb-8acd-c4f9ff13ba96"),
+                ImageUrl = "https://dummyimage.com/600x400/eee/aaa"
+            },
+            new Spot
+            {
                 Id = Guid.Parse("8374adda-d754-4feb-8acd-c4f9ff13ba96"),
                 Name = "Umeda",
                 Description = "It´s a train station but also much more than that.",

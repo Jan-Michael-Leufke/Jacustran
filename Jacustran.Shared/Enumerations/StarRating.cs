@@ -2,10 +2,11 @@
 
 public enum StarRating
 {
-    OneStar = 1,
-    TwoStars = 2,
-    ThreeStars = 3,
-    FourStars = 4,
-    FiveStars = 5
+    None,
+    OneStar,
+    TwoStars,
+    ThreeStars,
+    FourStars,
+    FiveStars,
 
 }

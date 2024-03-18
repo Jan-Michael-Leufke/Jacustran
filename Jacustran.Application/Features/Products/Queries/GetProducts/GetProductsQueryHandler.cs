@@ -13,8 +13,8 @@ public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, List<Pr
         _mapper = mapper;
     }
 
-    public async Task<List<ProductListVm>> Handle(GetProductsQuery request, CancellationToken cancellationToken)
+    public async Task<List<ProductListVm>> Handle(GetProductsQuery request, CancellationToken token)
     {
-         return _mapper.Map<List<ProductListVm>>((await _productRepository.GetAllAsync()).OrderBy(p => p.Name));
+         return _mapper.Map<List<ProductListVm>>((await _productRepository.GetAllAsync(token)).OrderBy(p => p.Name));
     }
 }

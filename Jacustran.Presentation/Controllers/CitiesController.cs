@@ -1,25 +1,33 @@
 ﻿using Jacustran.Application.Features.Citites.Commands.CreateCity;
 using Jacustran.Application.Features.Citites.Queries.GetCities;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+using Jacustran.Application.Features.Citites.Queries.GetCity;
 
 namespace Jacustran.Presentation.Controllers;
 
-public class CitiesController(ISender sender, IMapper mapper, IMediator mediator) : ApiController(sender, mapper)
+public class CitiesController(ISender sender, IMapper mapper) : ApiController(sender, mapper)
 {
     [HttpGet]
-    public async Task<IActionResult> GetCities(CancellationToken cancellationToken)
+    [HttpHead]
+    public async Task<ActionResult<IEnumerable<GetCitiesVm>>> GetCities(CancellationToken cancellationToken)
     {
         return Ok((await _sender.Send(new GetCitiesQuery(), cancellationToken)).Data);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> CreateCity(CreateCityRequest request, CancellationToken cancellationToken)
+    [HttpGet("{id:guid}", Name = "GetCityAction")]
+    [HttpHead("{id:guid}")]
+    public async Task<ActionResult<GetCityVm>> GetCity(Guid id, CancellationToken cancellationToken)
     {
-        var result = await mediator.Send(_mapper.Map<CreateCityCommand>(request), cancellationToken);
+        var result = await _sender.Send(new GetCityQuery { Id = id }, cancellationToken);
 
-        if(result.IsFailure) return FailureToProblemDetails(result);
+        return result.IsSuccess ? Ok(result.Data) : FailureToProblemDetails(result);
+    }
 
-        return Ok(result.Data);
+    [HttpPost]
+    public async Task<ActionResult<Guid>> CreateCity(CreateCityRequest request, CancellationToken cancellationToken)
+    {
+        var result = await _sender.Send(_mapper.Map<CreateCityCommand>(request), cancellationToken);
+
+        return result.IsSuccess ? CreatedAtRoute("GetCityAction", new { Id = result.Data }, result.Data) 
+                                : FailureToProblemDetails(result);
     }
 }

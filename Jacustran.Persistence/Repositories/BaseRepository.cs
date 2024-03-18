@@ -4,11 +4,18 @@ public class BaseRepository<T>(JacustranDbContext context) : IAsyncRepository<T>
 {
     protected readonly JacustranDbContext _context = context;
 
+    public virtual async Task<T?> GetByIdAsync(Guid id, CancellationToken token)
+    {
+        return await _context.Set<T>().FindAsync(id, token);
+    }
 
-    public async Task<IReadOnlyList<T>> GetAllAsync() => await _context.Set<T>().ToListAsync();
-    
+    public virtual async Task<IReadOnlyList<T>> GetAllAsync(CancellationToken token)
+    {
+        return await _context.Set<T>().ToListAsync(token);
+    }
+
     public void Add(T entity) => _context.Set<T>().Add(entity);
-    
+
     public async Task<Guid> InsertAsync(T entity)
     {
         Add(entity);
@@ -22,17 +29,12 @@ public class BaseRepository<T>(JacustranDbContext context) : IAsyncRepository<T>
     }
 
 
-    public Task<T> GetByIdAsync(Guid id)
-    {
-        throw new NotImplementedException();
-    }
-
     public Task UpdateAsync(T entity)
     {
         throw new NotImplementedException();
     }
 
-    //public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    //public virtual async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     //{
     //    return await _context.SaveChangesAsync(cancellationToken);
     //}

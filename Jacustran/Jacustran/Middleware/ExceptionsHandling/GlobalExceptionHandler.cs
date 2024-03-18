@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace Jacustran.Middleware.ExceptionsHandling;
 
@@ -11,11 +12,12 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger) : IE
 
         var problemDetails = new ProblemDetails
         {
-            Type = "https://tools.ietf.org/html/rfc7231#section-6.6.1",
-            Title = "Server Error",
-            Detail = $"There was a Server Error {GetType().Name}",
-            Instance = httpContext.Request.Path,
+            Title = "Server Error handled from Global Exception Handler",
             Status = StatusCodes.Status500InternalServerError,
+            Type = "https://tools.ietf.org/html/rfc7231#section-6.6.1", //Server Error
+            Instance = httpContext.Request.Path,
+            Detail = $"There was a Server Error",
+            Extensions = { { "trace", Activity.Current?.Id ?? httpContext.TraceIdentifier } }
         };
 
         httpContext.Response.StatusCode = StatusCodes.Status500InternalServerError;

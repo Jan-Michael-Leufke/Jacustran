@@ -19,7 +19,6 @@ public class ProductsController : ControllerBase
     [ProducesResponseType(typeof(IEnumerable<Product>) , StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<Product>>> GetProducts(CancellationToken cancellationToken)
     {
-        
         return Ok(_products);
     }
 

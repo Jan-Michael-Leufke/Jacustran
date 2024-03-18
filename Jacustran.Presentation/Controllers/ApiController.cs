@@ -11,35 +11,35 @@ public abstract class ApiController(ISender sender, IMapper mapper) : Controller
     protected readonly ISender _sender = sender;
     protected readonly IMapper _mapper = mapper;
 
-    protected IActionResult FailureToProblemDetails<T>(Result<T> result) => result switch
+    protected ActionResult<T> FailureToProblemDetails<T>(Result<T> result) => result switch
     {
         { IsSuccess: true } => throw new InvalidOperationException("The result is a success"),
         IValidationResult validationResult =>
             BadRequest(CreateProblemDetails(
                 "Validation Error",
-                StatusCodes.Status400BadRequest,
                 result.Error,
                 HttpContext,
+                StatusCodes.Status400BadRequest,
                 validationResult.ValidationErrors)),
         _ => BadRequest(CreateProblemDetails(
                 "Bad Request",
-                StatusCodes.Status400BadRequest,
                 result.Error,
-                httpContext: HttpContext))
+                httpContext: HttpContext,
+                StatusCodes.Status400BadRequest))
     };
 
     private static ProblemDetails CreateProblemDetails(
         string title,
-        int status,
         Error error,
-        HttpContext? httpContext,
+        HttpContext httpContext,
+        int status,
         Error[]? validationErrors = null) => 
         new()
         {
             Title = title,
             Status = status,
             Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1", //Bad Request
-            Instance = httpContext?.Request.Path.ToString() ?? "not specified",
+            Instance = httpContext.Request.Path.ToString(),
             Detail = error.description,
             Extensions = { { nameof(validationErrors), validationErrors }, { "trace", httpContext?.TraceIdentifier } }
         };
