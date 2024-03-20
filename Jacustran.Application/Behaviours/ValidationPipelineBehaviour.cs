@@ -17,7 +17,7 @@ public class ValidationPipelineBehaviour<TRequest, TResponse> : IPipelineBehavio
 
         Error[] errors = _validators.SelectMany(v => v.Validate(validationContext).Errors)
                                    .Where(vf => vf is not null)
-                                   .Select(f => new Error($"{f.ErrorCode}.{f.PropertyName}", f.ErrorMessage))
+                                   .Select(f => new Error($"{f.ErrorCode}.{f.PropertyName} value: {f.AttemptedValue}", f.ErrorMessage))
                                    .ToArray();
 
         if (!errors.Any()) return await next();

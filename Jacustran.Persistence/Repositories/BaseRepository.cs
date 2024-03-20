@@ -34,6 +34,19 @@ public class BaseRepository<T>(JacustranDbContext context) : IAsyncRepository<T>
         throw new NotImplementedException();
     }
 
+    public async Task<bool> IsIdValid(Guid id, CancellationToken cancellationToken)
+    {
+        return await _context.Set<T>().AnyAsync(e => e.Id == id, cancellationToken);
+    }
+
+    public void AddRange(IEnumerable<T> entities) => _context.AddRange(entities);
+
+    public async Task<IEnumerable<T>> GetByIdsAsync(IEnumerable<Guid> Ids, CancellationToken cancellationToken)
+    {
+        return await _context.Set<T>().Where(e => Ids.Contains(e.Id)).ToListAsync(cancellationToken);
+    }
+
+
     //public virtual async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     //{
     //    return await _context.SaveChangesAsync(cancellationToken);

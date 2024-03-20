@@ -1,6 +1,6 @@
-﻿namespace Jacustran.Application.Features.Citites.Commands.CreateCity;
+﻿namespace Jacustran.Application.Features.Citites.Commands.CreateCities;
 
-public class CreateCityRequest
+public record CreateCitiesRequest
 {
     public string Name { get; set; } = string.Empty;
     public string? Description { get; set; }
@@ -9,5 +9,6 @@ public class CreateCityRequest
     public int Population { get; set; }
     public string? ImageUrl { get; set; }
 
-    public ICollection<CreateCity_CreateSpotsDto> Spots { get; set;} = new List<CreateCity_CreateSpotsDto>();
+    public ICollection<CreateCities_CreateSpotsDto>? Spots { get; set; } = new List<CreateCities_CreateSpotsDto>();
+
 }

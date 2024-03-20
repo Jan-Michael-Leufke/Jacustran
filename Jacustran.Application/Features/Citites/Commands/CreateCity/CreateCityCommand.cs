@@ -9,4 +9,6 @@ public record CreateCityCommand : ICommand<Guid>
     public int Population { get; set; } 
     public string? ImageUrl { get; set; } 
 
+    public ICollection<CreateCity_CreateSpotsDto>? Spots { get; set;} = new List<CreateCity_CreateSpotsDto>();
+
 }

@@ -4,4 +4,5 @@ public interface ISpotRepository : IAsyncRepository<Spot>
 {
     Task<bool> IsCityIdValid(Guid cityId, CancellationToken token);
     Task<Spot?> GetSpotWithTown(Guid spotId, CancellationToken token);
+    Task<IEnumerable<Spot>> GetSpotsForCity(Guid cityId, CancellationToken token);
 }

@@ -44,10 +44,10 @@ public static class StartupExtensions
 
 
         //builder.Services.AddFluentValidationAutoValidation(c => c.DisableDataAnnotationsValidation = true);
-                        //.AddFluentValidationClientsideAdapters();
+        //.AddFluentValidationClientsideAdapters();
+
 
         //builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehaviour<,>));
-
         builder.Services.AddScoped<HttpClient>(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7248") });
         builder.Services.AddHttpContextAccessor();
 
@@ -56,11 +56,11 @@ public static class StartupExtensions
 
         builder.Services.AddProblemDetails(configure =>
         {
-            //configure.CustomizeProblemDetails = context =>
-            //{
-            //    context.ProblemDetails.Extensions.Add("additional entry", "some info from customized Problemdetails");
-            //    context.ProblemDetails.Status = 777;
-            //};
+            configure.CustomizeProblemDetails = context =>
+            {
+                context.ProblemDetails.Extensions.Add("additional entry", "some info from customized Problemdetails");
+                context.ProblemDetails.Status = 777;
+            };
         });
 
         builder.Services.AddCors(setup =>
@@ -106,9 +106,9 @@ public static class StartupExtensions
 
         if (app.Environment.IsDevelopment())
         {
-            app.UseExceptionHandler();
+            //app.UseExceptionHandler();
             //app.UseWebAssemblyDebugging();
-            //app.UseDeveloperExceptionPage();
+            app.UseDeveloperExceptionPage();
         }
         else
         {

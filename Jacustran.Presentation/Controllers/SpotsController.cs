@@ -16,7 +16,7 @@ public class SpotsController(ISender sender, IMapper mapper) : ApiController(sen
         return Ok(result.Data);
     }
 
-
+    
     [HttpGet("{spotId:guid}", Name = "GetSpotAction")]
     [HttpHead("{spotId:guid}")]
     public async Task<ActionResult<GetSpotVm>> GetSpot(Guid spotId, CancellationToken cancellationToken)
@@ -25,7 +25,6 @@ public class SpotsController(ISender sender, IMapper mapper) : ApiController(sen
 
         return result.IsSuccess ? Ok(result.Data) : FailureToProblemDetails(result);
     }
-
 
     [HttpPost]
     public async Task<ActionResult<Guid>> CreateSpot(CreateSpotRequest request, CancellationToken cancellationToken)

@@ -11,8 +11,8 @@ public static class GetSpots
 
         public GetSpotsQueryHandler(IAsyncRepository<Spot> spotRepository, IMapper mapper)
         {
-            _spotRepository = spotRepository;
             _mapper = mapper;
+            _spotRepository = spotRepository;
         }
 
         public async Task<Result<IEnumerable<GetSpotsVm>>> Handle(GetSpotsQuery request, CancellationToken token)
