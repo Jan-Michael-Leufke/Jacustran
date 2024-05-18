@@ -1,14 +1,16 @@
-﻿namespace Jacustran.Application.Features.Citites.Commands.CreateCity;
+﻿using Jacustran.SharedKernel.Interfaces.Persistence;
 
-public class CreateCityCommandHandler : ICommandHandler<CreateCityCommand, Guid>
+namespace Jacustran.Application.Features.Citites.Commands.CreateCity;
+
+public class CreateCityCommandHandler : ICommandHandler<CreateCityCommand, CreateCityResponse>
 {
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IAsyncRepository<City> _cityRepository;
+    private readonly IAsyncRepository<City, Guid> _cityRepository;
     private readonly IMapper _mapper;
     //private readonly IValidator<CreateCityCommand> _validator;
 
     public CreateCityCommandHandler
-       (IAsyncRepository<City> cityRepository, 
+       (IAsyncRepository<City, Guid> cityRepository, 
         IMapper mapper, 
         IUnitOfWork unitOfWork,
         IValidator<CreateCityCommand> validator)
@@ -19,7 +21,7 @@ public class CreateCityCommandHandler : ICommandHandler<CreateCityCommand, Guid>
         //_validator = validator;
     }
 
-    public async Task<Result<Guid>> Handle(CreateCityCommand command, CancellationToken cancellationToken)
+    public async Task<Result<CreateCityResponse>> Handle(CreateCityCommand command, CancellationToken cancellationToken)
     {        
         //var validationResult = await _validator.ValidateAsync(command, cancellationToken);
         
@@ -33,7 +35,7 @@ public class CreateCityCommandHandler : ICommandHandler<CreateCityCommand, Guid>
         var result = await _unitOfWork.TrySaveChangesAsync(cancellationToken);
         
         //return Result<Guid>.Success(newCityEntity.Id);
-        return result.IsSuccess ? Result<Guid>.Success(newCityEntity.Id) : 
-            Result<Guid>.Failure(new("SQL.Error", "Sql Error from App-Layer"));
+        return result.IsSuccess ? Result<CreateCityResponse>.Success(new CreateCityResponse(newCityEntity.Id)) : 
+            Result<CreateCityResponse>.Failure(new("SQL.Error", "Sql Error from App-Layer"));
     }
 }

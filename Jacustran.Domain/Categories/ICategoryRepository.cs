@@ -1,5 +1,7 @@
-﻿namespace Jacustran.Domain.Categories;
+﻿using Jacustran.SharedKernel.Interfaces.Persistence;
 
-public interface ICategoryRepository : IAsyncRepository<Category>
+namespace Jacustran.Domain.Categories;
+
+public interface ICategoryRepository : IAsyncRepository<Category, Guid>
 {
 }

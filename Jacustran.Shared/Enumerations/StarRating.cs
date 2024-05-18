@@ -8,5 +8,4 @@ public enum StarRating
     ThreeStars,
     FourStars,
     FiveStars,
-
 }

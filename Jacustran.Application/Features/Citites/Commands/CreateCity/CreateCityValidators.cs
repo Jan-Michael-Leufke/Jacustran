@@ -5,7 +5,7 @@ public class CreateCityCommandValidator : AbstractValidator<CreateCityCommand>
     public CreateCityCommandValidator()
     {
         RuleFor(c => c.Name).NotEmpty().WithMessage("Name is required from command in App Layer");
-        RuleFor(c => c.Description).MaximumLength(10).WithMessage("Description must not exceed 10 characters for testing purposes");   
+        RuleFor(c => c.Description).MaximumLength(200).WithMessage("Description must not exceed 10 characters for testing purposes");   
         RuleForEach(c => c.Spots).SetValidator(new CreateCity_CreateSpotsDtoValidator());
     }
 }

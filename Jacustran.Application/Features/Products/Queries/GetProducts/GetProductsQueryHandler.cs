@@ -1,13 +1,14 @@
 ﻿using Jacustran.Domain.Products;
+using Jacustran.SharedKernel.Interfaces.Persistence;
 
 namespace Jacustran.Application.Features.Products.Queries.GetProducts;
 
 public class GetProductsQueryHandler : IRequestHandler<GetProductsQuery, List<ProductListVm>>
 {
-    private readonly IAsyncRepository<Product> _productRepository;
+    private readonly IAsyncRepository<Product, Guid> _productRepository;
     private readonly IMapper _mapper;
 
-    public GetProductsQueryHandler(IMapper mapper, IAsyncRepository<Product> productRepository)
+    public GetProductsQueryHandler(IMapper mapper, IAsyncRepository<Product, Guid> productRepository)
     {
         _productRepository = productRepository;
         _mapper = mapper;

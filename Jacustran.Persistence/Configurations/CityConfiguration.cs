@@ -12,5 +12,7 @@ public class CityConfiguration : IEntityTypeConfiguration<City>
 
         builder.Property(p  => p.Description)
             .HasMaxLength(200);
+
+        
     }
 }

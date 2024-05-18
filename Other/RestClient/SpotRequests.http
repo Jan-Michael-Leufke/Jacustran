@@ -1,0 +1,169 @@
+
+@scheme = https://
+@host = localhost:7248
+@url = {{scheme}}{{host}}/api
+@Kiyomizu_SpotGuid = af871625-d754-4feb-8acd-c4f9ff13ba96
+@Oyamazaki_SpotGuid = 9384adfa-d754-4feb-8acd-c4f9ff13ba96
+@OjironOnsen_Spotguid = 8374a227-d754-4feb-8acd-c4f9ff13fa34
+@unknownGuid = 8374a227-d754-4feb-8acd-c4f9adf4153f
+
+GET {{url}}/spots
+###
+GET {{url}}/spots/{{Kiyomizu_SpotGuid}}
+###
+POST {{url}}/spots
+Content-Type: application/json
+
+{
+  "name": "a new spot - posted",
+  "description": "a new spot description - posted",
+  "imageUrl": "testImageUrl",
+  "Rating": "twostars",
+}
+
+###
+PUT {{url}}/spots/{{Kiyomizu_SpotGuid}}
+Content-Type: application/json
+
+{
+  "name": "Kiyomizu updated again",
+  "description": "Kiyomizu is a temple in Kyoto - updated",
+  "imageUrl": "testImageUrl - updated",
+  "Rating": 5,
+  "Location": {
+    "Name": "Kyoto updated city from an child upsert",
+    "description": "Kyoto is a city in Japan - updated",
+    "population": 1009743,
+    "imageUrl" : "testImageUrl - updated",
+    "Isimportantcity": false,
+    "LocationType": "City"
+  }
+}
+
+
+
+###
+PUT {{url}}/spots/{{Oyamazaki_SpotGuid}}
+Content-Type: application/json
+
+{
+  "name": "new place upserted",
+  "description": "Kiyomizu is a temple in Kyoto - upserted",
+  "imageUrl": "testImageUrl - upserted",
+  "Rating": 1,
+  "Location": {
+    "Name": "new place upserted city from an child upsert",
+    "population": 100399,
+    "Isimportantcity": false,
+    "LocationType": "City"
+  }
+}
+
+
+###
+Get {{url}}/spots/{{Oyamazaki_SpotGuid}}
+
+
+###
+Put {{url}}/spots/{{OjironOnsen_Spotguid}}
+Content-Type: application/json
+
+{
+  "name": "new place upserted",
+  "description": "ojiron onsen - upserted",
+  "imageUrl": "testImageUrl - upserted",
+  "Rating": "fourStars",
+  "Location": {
+    "Name": "ojiro upserted",
+    "population": 1005,
+    "Isimportantcity": false,
+    "description": "Ojiro is a city in Japan - upserted",
+    "imageUrl" : "testImageUrl - upserted",
+  }
+}
+
+
+###
+Get {{url}}/spots/{{OjironOnsen_Spotguid}}
+
+###
+
+Put {{url}}/spots/{{unknownGuid}}
+Content-Type: application/json
+
+{
+  "name": "new unknown place upserted",
+  "description": "unknown onsen - upserted",
+  "imageUrl": "testImageUrl - upserted",
+  "Rating": "threeStars",
+  "Location": {
+    "Name": "unknown upserted",
+    "population": 1005,
+    "Isimportantcity": false,
+    "LocationType": "City"
+  }
+}
+
+
+###
+Get {{url}}/spots/{{unknownGuid}}
+
+
+###
+
+PATCH {{url}}/spots/{{Kiyomizu_SpotGuid}}
+Content-Type: application/json-patch+json
+
+[
+    {
+        "op": "replace",
+        "path": "/name",
+        "value": "Kiyomizu uppatched"
+    },
+    {
+        "op": "replace",
+        "path": "/description",
+        "value": "Kiyomizu is a temple in Kyoto - patched againe"
+    }
+    # {
+    #     "op" : "add",
+    #     "path" : "/location",
+    #     "value" : {
+    #         "Name": "Kyoto uppatched city over spot",
+    #     }
+    # }
+]
+
+
+###
+Patch {{url}}/spots/{{unknownGuid}}
+Content-Type: application/json-patch+json
+
+[
+    {
+        "op": "replace",
+        "path": "/name",
+        "value": "Kiyomizu patched"
+    },
+    {
+        "op": "replace",
+        "path": "/description",
+        "value": "Kiyomizu is a temple in Kyoto - patched againe"
+    },
+    {
+        "op" : "add",
+        "path" : "/location",
+        "value" : {
+            "Name": "unknown city uppatching test",
+        }
+    },
+    {
+        "op" : "add",
+        "path" : "/location/locationType",
+        "value" : "City"
+    }
+]
+
+###
+Get {{url}}/spots/{{unknownGuid}}
+

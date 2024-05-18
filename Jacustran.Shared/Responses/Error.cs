@@ -1,4 +1,4 @@
-﻿namespace Jacustran.Shared.Responses;
+﻿namespace Jacustran.SharedKernel.Responses;
 
 public record Error(string errorCode, string? description = null)
 {

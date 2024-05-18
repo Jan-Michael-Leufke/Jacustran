@@ -1,5 +1,7 @@
-﻿namespace Jacustran.Domain.Products;
+﻿using Jacustran.SharedKernel.Interfaces.Persistence;
 
-public interface IProductRepository : IAsyncRepository<Product>
+namespace Jacustran.Domain.Products;
+
+public interface IProductRepository : IAsyncRepository<Product, Guid>
 {
 }

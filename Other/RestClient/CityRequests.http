@@ -1,0 +1,111 @@
+
+@scheme = https://
+@host = localhost:7248
+@url = {{scheme}}{{host}}/api
+@Kyoto_CityGuid = af1fd609-d754-4feb-8acd-c4f9ff13ba96
+@Osaka_CityGuid = ac338e7a-d754-4feb-8acd-c4f9ff13ba96
+
+@Kiyomizu_SpotGuid = af871625-d754-4feb-8acd-c4f9ff13ba96
+
+GET {{url}}/cities
+###
+
+GET {{url}}/cities/{{Kyoto_CityGuid}}
+Accept: application/json
+###
+
+Get {{url}}/cities/{{Kyoto_CityGuid}}/spots
+Accept: application/json
+###
+
+GET {{url}}/cities/{{Kyoto_CityGuid}}/spots/{{Kiyomizu_SpotGuid}}
+Accept: application/json
+###
+
+
+GET {{url}}/cityCollections/{{Kyoto_CityGuid}},{{Osaka_CityGuid}}
+Accept: application/json
+###
+
+POST {{url}}/cities
+Content-Type: application/json
+
+{
+  "name": "Kyoto Create",
+  "description" : "Kyoto is a city in Japan",
+  "imageurl" : "kyototestImageUrl.com",
+  "population": 1475000,
+  "isImportantCity" : true,
+  "Spots" : 
+  [
+    {
+        "name" : "Kinkaku-ji Create",
+        "description" : "Kinkaku-ji is a Zen Buddhist temple in Kyoto, Japan. ",
+        "StarRating" : 5,
+        "imageUrl" : "Kinkaku-ji testImageUrl.com"
+    },
+    {
+        "name" : "Kiyomizu-dera Create",
+        "StarRating" : 4,
+        "imageurl" : "Kiyomizu-dera testImageUrl.com",
+        "description" : "Kiyomizu-dera, officially Otowa-san Kiyomizu-dera",
+
+    }
+  ]
+}
+###
+
+PUT {{url}}/cities/af1fd609-d754-4feb-8acd-c4f9ff13ba96
+Content-Type: application/json
+Accept: application/json
+
+{
+  "Name":"Kyoto updated with PUT Upsert",
+  "population": 5000,
+  "description": "Kyoto is a city in Japan - updated by PUT Upsert",
+  "isImportantCity" : true,
+  "imageUrl": "testImageUrl.com - updated by PUT Upsert",
+}
+###
+
+
+PUT {{url}}/cities/af1fd609-dfff-4feb-8acd-fff9ff13ba9f
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Kyoto upserted city create again",
+  "population": 6000,
+  "description": "Kyoto is a city in Japan - upserted city create",
+  "isImportantCity" : true,
+  "imageUrl": "testImageUrl.com - upserted city",
+  "Spots" : 
+  [
+    {
+        "name" : "Kinkaku-ji- test create"
+    },
+    {
+        "name" : "Kiyomizu-dera- test create"
+    }
+  ]
+}
+
+### 
+Patch {{url}}/cities/{{Kyoto_CityGuid}}
+Content-Type: application/json-patch+json
+Accept: application/json
+
+[
+    {
+        "op" : "replace",
+        "path" : "/name",
+        "value" : "Kyoto patched again"
+    }
+]
+
+
+###
+OPTIONS {{url}}/cities
+
+###
+  "CityId" : "af1fd609-d754-4feb-8acd-c4f9ff13ba96",

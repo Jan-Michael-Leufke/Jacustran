@@ -1,4 +1,4 @@
-﻿namespace Jacustran.Shared.Responses;
+﻿namespace Jacustran.SharedKernel.Responses;
 
 public class Result<T>
 {

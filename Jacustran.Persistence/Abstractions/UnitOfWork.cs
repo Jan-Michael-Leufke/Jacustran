@@ -1,4 +1,9 @@
-﻿namespace Jacustran.Persistence.Abstractions;
+﻿using Jacustran.SharedKernel.Abstractions.Entities;
+using Jacustran.SharedKernel.Interfaces.Persistence;
+using Jacustran.SharedKernel.ValueObjects;
+using System.Reflection;
+
+namespace Jacustran.Persistence.Abstractions;
 
 public class UnitOfWork(JacustranDbContext jacustranDbContext) : IUnitOfWork
 {
@@ -21,14 +26,15 @@ public class UnitOfWork(JacustranDbContext jacustranDbContext) : IUnitOfWork
         }
         catch (Exception ex)
         {
-            return Result<int>.Failure(new("Sql.Error", "Exception thrown during saving changes"));
+            return Result<int>.Failure(new("Sql.Error", $"Exception thrown during saving changes -- {ex.Message}" ));
         }
     }
 
 
+
     private void SetAuditProperties()
     {
-        foreach (var entry in _context.ChangeTracker.Entries<EntityBase>())
+        foreach (var entry in _context.ChangeTracker.Entries<AuditableEntity>())
         {
             switch (entry.State)
             {

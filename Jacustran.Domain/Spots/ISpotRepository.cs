@@ -1,6 +1,8 @@
-﻿namespace Jacustran.Domain.Spots;
+﻿using Jacustran.SharedKernel.Interfaces.Persistence;
 
-public interface ISpotRepository : IAsyncRepository<Spot>
+namespace Jacustran.Domain.Spots;
+
+public interface ISpotRepository : IAsyncRepository<Spot, Guid>
 {
     Task<bool> IsCityIdValid(Guid cityId, CancellationToken token);
     Task<Spot?> GetSpotWithTown(Guid spotId, CancellationToken token);

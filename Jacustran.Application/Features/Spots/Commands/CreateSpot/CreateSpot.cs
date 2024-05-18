@@ -1,4 +1,5 @@
 ﻿using Jacustran.Application.Features.Citites.Commands.CreateCity;
+using Jacustran.SharedKernel.Interfaces.Persistence;
 using System.ComponentModel.DataAnnotations;
 
 namespace Jacustran.Application.Features.Spots.Commands.CreateSpot;
@@ -17,12 +18,12 @@ public static class CreateSpot
 
     public class CreateSpotCommandHandler : ICommandHandler<CreateSpotCommand, Guid>
     {
-        private readonly IAsyncRepository<Spot> _spotRepository;
+        private readonly IAsyncRepository<Spot, Guid> _spotRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
 
         
-        public CreateSpotCommandHandler(IAsyncRepository<Spot> spotRepository, IMapper mapper, IUnitOfWork unitOfWork)
+        public CreateSpotCommandHandler(IAsyncRepository<Spot, Guid> spotRepository, IMapper mapper, IUnitOfWork unitOfWork)
         {
             _spotRepository = spotRepository;
             _mapper = mapper;

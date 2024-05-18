@@ -1,6 +1,7 @@
 ﻿namespace Jacustran.Application.Features.Citites.Queries.GetCity;
 
-public class GetCityQuery : IQuery<GetCityVm> 
+
+public class GetCityQuery : IQuery<GetCityResponse>
 {
-    public Guid Id { get; set; }
+    public Guid CityId { get; set; }
 }

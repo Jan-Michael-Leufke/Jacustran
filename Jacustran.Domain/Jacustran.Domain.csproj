@@ -11,7 +11,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Jacustran.Shared\Jacustran.Shared.csproj" />
+    <ProjectReference Include="..\Jacustran.Shared\Jacustran.SharedKernel.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Aggregates\" />
+    <Folder Include="Constants\" />
+    <Folder Include="Events\" />
+    <Folder Include="Handlers\" />
+    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

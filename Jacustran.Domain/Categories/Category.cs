@@ -1,6 +1,8 @@
-﻿namespace Jacustran.Domain.Categories;
+﻿using Jacustran.SharedKernel.Abstractions.Entities;
 
-public class Category(string name) : EntityBase
+namespace Jacustran.Domain.Categories;
+
+public class Category(string name) : AggregateRoot<Guid>
 {
     public Category() : this(string.Empty) { }
 

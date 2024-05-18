@@ -1,6 +1,8 @@
-﻿namespace Jacustran.Domain.Cities;
+﻿using Jacustran.SharedKernel.Interfaces.Persistence;
 
-public interface ICityRepository : IAsyncRepository<City>
+namespace Jacustran.Domain.Cities;
+
+public interface ICityRepository : IAsyncRepository<City, Guid>
 {
     Task<City?> GetCityWithSpots(Guid id, CancellationToken token);
 }

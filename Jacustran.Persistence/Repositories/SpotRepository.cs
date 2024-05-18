@@ -2,7 +2,7 @@
 
 namespace Jacustran.Persistence.Repositories;
 
-public class SpotRepository(JacustranDbContext context) : BaseRepository<Spot>(context), ISpotRepository
+public class SpotRepository(JacustranDbContext context) : BaseRepository<Spot, Guid>(context), ISpotRepository
 {
     public async Task<IEnumerable<Spot>> GetSpotsForCity(Guid cityId, CancellationToken token)
     {

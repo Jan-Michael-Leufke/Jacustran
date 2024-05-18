@@ -8,17 +8,28 @@ global using Jacustran.Domain.Cities;
 global using Jacustran.Domain.Spots;
 global using Jacustran.Domain.Shared;
 
-global using Jacustran.Shared.Responses;
-global using Jacustran.Shared.Exceptions;
-global using Jacustran.Shared.Contracts;
-global using Jacustran.Shared.Enumerations;
+global using Jacustran.SharedKernel.Responses;
+global using Jacustran.Domain.Exceptions;
+global using Jacustran.SharedKernel.Contracts;
+global using Jacustran.Domain.Enumerations;
 
-global using Jacustran.Application.Contracts.Application.MediatR;
-global using Jacustran.Application.Abstractions.MediatR;
+
+
+global using Jacustran.SharedKernel.Abstractions.MediatR;
+global using Jacustran.SharedKernel.Abstractions.Entities;
+global using Jacustran.SharedKernel.Behaviours;
+global using Jacustran.SharedKernel.Interfaces.MediatR;
+global using Jacustran.SharedKernel.Abstractions;
+global using Jacustran.Application.Abstractions.Api;
+
+
+
+
+global using Microsoft.AspNetCore.JsonPatch;
 
 using Microsoft.Extensions.DependencyInjection;
 using System.Security;
-using Jacustran.Application.Behaviours;
+
 
 namespace Jacustran.Application.Registrations;
 

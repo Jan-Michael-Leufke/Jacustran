@@ -3,7 +3,11 @@ using Jacustran.Application.Features.Citites.Queries.GetCity_Spots;
 using Jacustran.Application.Features.Spots.Commands.CreateSpot;
 using static Jacustran.Application.Features.Spots.Commands.CreateSpot.CreateSpot;
 using static Jacustran.Application.Features.Spots.Commands.CreateSpotForCity.CreateSpotForCity;
+using static Jacustran.Application.Features.Spots.Commands.CreateSpots.CreateSpots;
+using static Jacustran.Application.Features.Spots.Commands.PartialUpsertSpot.PartialUpsertSpot;
+using static Jacustran.Application.Features.Spots.Commands.UpdateSpot.UpsertSpot;
 using static Jacustran.Application.Features.Spots.Queries.GetSpot.GetSpot;
+using static Jacustran.Application.Features.Spots.Queries.GetSpotCollection.GetSpotCollection;
 using static Jacustran.Application.Features.Spots.Queries.GetSpots.GetSpots;
 
 namespace Jacustran.Application.Profiles;
@@ -37,13 +41,33 @@ public class SpotMappingProfile : Profile
 
         //GetCity_Spot
         CreateMap<Spot, GetCity_SpotVm>();
+
+        //GetSpotCollection
+        CreateMap<Spot, GetSpotCollectionVm>();
+
+        //CreateSpots
+        CreateMap<CreateSpotsRequest, CreateSpotsCommandInnerDto>();
+        CreateMap<CreateSpotsCommandInnerDto, Spot>();
+
+        //upsertSpot
+        CreateMap<UpsertSpotRequest, UpsertSpotCommand>();
+        CreateMap<UpsertSpotCommand, Spot>(); //.ForMember(d => d.Town, opt => opt.MapFrom(s => s.Location));
+
+        CreateMap<UpsertSpotRequest_UpsertLocationDto, Town>();
+        CreateMap<UpsertSpotRequest_UpsertLocationDto, City>();
+
+        //PartialUpsertSpot
+        CreateMap<PartialUpsertSpotPatchDto, Spot>().ReverseMap(); //.ForMember(d => d.Town, opt => opt.MapFrom(s => s.Location)).ReverseMap();
+        CreateMap<PartialUpsertSpotPatchDto_PartialUpsertLocationDto, City>().ReverseMap();
+        CreateMap<PartialUpsertSpotPatchDto_PartialUpsertLocationDto, Town>().ReverseMap();
+
     }
 
 
 }
 
-//public class CreateSpot_CreateCityDtoToTownConverter : ITypeConverter<CreateSpot_CreateCityDto, Town>
 //{
+//public class CreateSpot_CreateCityDtoToTownConverter : ITypeConverter<CreateSpot_CreateCityDto, Town>
 //    public Town Convert(CreateSpot_CreateCityDto source, Town destination, ResolutionContext context)
 //    {
 //        var converted = new City()

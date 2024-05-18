@@ -1,50 +1,54 @@
-﻿namespace Jacustran.Persistence.Repositories;
+﻿using Jacustran.SharedKernel.Interfaces.Persistence;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-public class BaseRepository<T>(JacustranDbContext context) : IAsyncRepository<T> where T : EntityBase
+namespace Jacustran.Persistence.Repositories;
+
+public class BaseRepository<TEntity, TId>(JacustranDbContext context) : IAsyncRepository<TEntity, TId> 
+    where TEntity : AggregateRoot<TId>
+    where TId : struct
 {
     protected readonly JacustranDbContext _context = context;
 
-    public virtual async Task<T?> GetByIdAsync(Guid id, CancellationToken token)
+    public virtual async Task<TEntity?> GetByIdAsync(TId id, CancellationToken token = default)
     {
-        return await _context.Set<T>().FindAsync(id, token);
+        return await _context.Set<TEntity>().FindAsync(id, token);
     }
 
-    public virtual async Task<IReadOnlyList<T>> GetAllAsync(CancellationToken token)
+    public virtual async Task<IReadOnlyList<TEntity>> GetAllAsync(CancellationToken token = default)
     {
-        return await _context.Set<T>().ToListAsync(token);
+        return await _context.Set<TEntity>().ToListAsync(token);
     }
 
-    public void Add(T entity) => _context.Set<T>().Add(entity);
+    public void Add(TEntity entity) => _context.Set<TEntity>().Add(entity);
 
-    public async Task<Guid> InsertAsync(T entity)
+    public async Task<TId> InsertAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
         Add(entity);
         await _context.SaveChangesAsync();
         return entity.Id;
     }
 
-    public Task DeleteAsync(T entity)
+    public Task DeleteAsync(TEntity entity, CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
 
 
-    public Task UpdateAsync(T entity)
+    public void Update(TEntity entity) => _context.Update(entity);
+    
+
+    public async Task<bool> IsIdValid(TId id, CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        return await _context.Set<TEntity>().AnyAsync(e => e.Id.Equals(id), cancellationToken);
     }
 
-    public async Task<bool> IsIdValid(Guid id, CancellationToken cancellationToken)
+    public void AddRange(IEnumerable<TEntity> entities) => _context.AddRange(entities);
+
+    public async Task<IReadOnlyList<TEntity>> GetByIdsAsync(IEnumerable<TId> Ids, CancellationToken cancellationToken = default)
     {
-        return await _context.Set<T>().AnyAsync(e => e.Id == id, cancellationToken);
+        return await _context.Set<TEntity>().Where(e => Ids.Contains(e.Id)).ToListAsync(cancellationToken);
     }
 
-    public void AddRange(IEnumerable<T> entities) => _context.AddRange(entities);
-
-    public async Task<IEnumerable<T>> GetByIdsAsync(IEnumerable<Guid> Ids, CancellationToken cancellationToken)
-    {
-        return await _context.Set<T>().Where(e => Ids.Contains(e.Id)).ToListAsync(cancellationToken);
-    }
 
 
     //public virtual async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)

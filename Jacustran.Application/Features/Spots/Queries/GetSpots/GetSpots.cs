@@ -1,4 +1,6 @@
-﻿namespace Jacustran.Application.Features.Spots.Queries.GetSpots;
+﻿using Jacustran.SharedKernel.Interfaces.Persistence;
+
+namespace Jacustran.Application.Features.Spots.Queries.GetSpots;
 
 public static class GetSpots
 {
@@ -6,10 +8,10 @@ public static class GetSpots
 
     internal class GetSpotsQueryHandler : IQueryHandler<GetSpotsQuery, IEnumerable<GetSpotsVm>>
     {
-        private readonly IAsyncRepository<Spot> _spotRepository;
+        private readonly IAsyncRepository<Spot, Guid> _spotRepository;
         private readonly IMapper _mapper;
 
-        public GetSpotsQueryHandler(IAsyncRepository<Spot> spotRepository, IMapper mapper)
+        public GetSpotsQueryHandler(IAsyncRepository<Spot, Guid> spotRepository, IMapper mapper)
         {
             _mapper = mapper;
             _spotRepository = spotRepository;

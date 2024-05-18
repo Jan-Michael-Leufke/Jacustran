@@ -1,6 +1,8 @@
-﻿namespace Jacustran.Domain.Products;
+﻿
 
-public class Product(string name) : EntityBase
+namespace Jacustran.Domain.Products;
+
+public class Product(string name) : AggregateRoot<Guid>
 {
     public Product() : this(string.Empty) { }
 

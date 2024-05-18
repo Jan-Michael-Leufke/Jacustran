@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace Jacustran.Shared.Responses;
+namespace Jacustran.SharedKernel.Responses;
 
 public class Result
 {

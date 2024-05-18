@@ -1,14 +1,19 @@
-﻿namespace Jacustran.Application.Features.Citites.Queries.GetCities;
+﻿using Jacustran.SharedKernel.Interfaces.Persistence;
 
-public class GetCitiesQueryHandler : BaseQueryHandler<City>, IQueryHandler<GetCitiesQuery, IEnumerable<GetCitiesVm>> 
+namespace Jacustran.Application.Features.Citites.Queries.GetCities;
+
+public class GetCitiesQueryHandler : QueryHandlerBase<GetCitiesQuery, GetCitiesResponse> 
 {
-    public GetCitiesQueryHandler(IMapper mapper, IAsyncRepository<City> asyncRepository) : base(mapper, asyncRepository) { }
+    private readonly IAsyncRepository<City, Guid> _asyncRepository;
 
-    public async Task<Result<IEnumerable<GetCitiesVm>>> Handle(GetCitiesQuery request, CancellationToken token)
+    public GetCitiesQueryHandler(IMapper mapper, IAsyncRepository<City, Guid> asyncRepository) : base(mapper)  => _asyncRepository = asyncRepository;
+
+    public override async Task<Result<GetCitiesResponse>> Handle(GetCitiesQuery query, CancellationToken token)
     {
         var getCitiesVms = _mapper.Map<IEnumerable<GetCitiesVm>>((await _asyncRepository.GetAllAsync(token)).OrderBy(c => c.Name));
 
-        return Result<IEnumerable<GetCitiesVm>>.Success(getCitiesVms);
+        return Result<GetCitiesResponse>.Success(new GetCitiesResponse(getCitiesVms));
+
     }
 }
 

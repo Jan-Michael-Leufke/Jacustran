@@ -1,10 +1,15 @@
-﻿using static Jacustran.Application.Features.Spots.Commands.CreateSpot.CreateSpot;
+﻿using Jacustran.Presentation.Abstractions;
+using Microsoft.AspNetCore.Http;
+using static Jacustran.Application.Features.Spots.Commands.CreateSpot.CreateSpot;
 using static Jacustran.Application.Features.Spots.Commands.CreateSpotForCity.CreateSpotForCity;
+using static Jacustran.Application.Features.Spots.Commands.PartialUpsertSpot.PartialUpsertSpot;
+using static Jacustran.Application.Features.Spots.Commands.UpdateSpot.UpsertSpot;
 using static Jacustran.Application.Features.Spots.Queries.GetSpot.GetSpot;
 using static Jacustran.Application.Features.Spots.Queries.GetSpots.GetSpots;
 
 namespace Jacustran.Presentation.Controllers;
 
+[Route("api/Spots")]
 public class SpotsController(ISender sender, IMapper mapper) : ApiController(sender, mapper)
 {
     [HttpGet]
@@ -16,7 +21,7 @@ public class SpotsController(ISender sender, IMapper mapper) : ApiController(sen
         return Ok(result.Data);
     }
 
-    
+
     [HttpGet("{spotId:guid}", Name = "GetSpotAction")]
     [HttpHead("{spotId:guid}")]
     public async Task<ActionResult<GetSpotVm>> GetSpot(Guid spotId, CancellationToken cancellationToken)
@@ -33,7 +38,7 @@ public class SpotsController(ISender sender, IMapper mapper) : ApiController(sen
 
         if (result.IsFailure) return FailureToProblemDetails(result);
 
-        return CreatedAtRoute("GetSpotAction", new { spotId = result.Data } , result.Data);
+        return CreatedAtRoute("GetSpotAction", new { spotId = result.Data }, result.Data);
     }
 
     [HttpPost("{cityId:guid}")]
@@ -48,4 +53,44 @@ public class SpotsController(ISender sender, IMapper mapper) : ApiController(sen
 
         return CreatedAtRoute("GetSpotAction", new { spotId = result.Data }, result.Data);
     }
+
+    [HttpPut("{spotId:guid}")]
+    public async Task<IActionResult> UpsertSpot(Guid spotId, UpsertSpotRequest request, CancellationToken cancellationToken)
+    {
+        var command = _mapper.Map<UpsertSpotCommand>(request);
+        command.SpotId = spotId;
+
+        var result = await _sender.Send(command, cancellationToken);
+
+        if (result.IsFailure) return FailureToProblemDetailsAsIActionResult(result);
+
+        return result.Data.created ?
+            CreatedAtRoute("GetSpotAction", new { result.Data.spotId }, result.Data .spotId) : NoContent();
+    }
+
+
+    [HttpPatch("{spotId:guid}")]
+    public async Task<IActionResult> PartialUpdateSpot(Guid spotId, 
+        JsonPatchDocument<PartialUpsertSpotPatchDto> patchDocument, 
+        CancellationToken cancellationToken)
+    {
+        var command = new PartialUpsertSpotCommand { SpotId = spotId, PatchDocument = patchDocument };
+
+        var result = await _sender.Send(command, cancellationToken);
+
+        if (result.IsFailure) return FailureToProblemDetailsAsIActionResult(result);
+
+        return result.Data.created ? 
+            CreatedAtRoute("GetSpotAction", new { result.Data.spotId }, result.Data.spotId) : NoContent();
+    }
+
+
+    [HttpOptions]
+    public IActionResult GetSpotsOptions()
+    {
+        Response.Headers.Append("Allow", "GET, HEAD, POST, PUT, PATCH, OPTIONS");
+
+        return Ok();
+    }
+
 }

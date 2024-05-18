@@ -108,6 +108,7 @@ namespace Jacustran.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -117,6 +118,7 @@ namespace Jacustran.Persistence.Migrations
                         .HasColumnType("nvarchar(5)");
 
                     b.Property<string>("ImageUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastModifiedBy")
@@ -140,6 +142,18 @@ namespace Jacustran.Persistence.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("Town");
 
                     b.UseTphMappingStrategy();
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("ffd3d609-d754-4feb-8acd-c4f9ff13adf4"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Ojiro is mostly a mountainous area and prides itself as the homeland of Wagyu cattle.",
+                            ImageUrl = "https://dummyimage.com/600x400/eee/aaa",
+                            LastModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Ojiro",
+                            Population = 2200
+                        });
                 });
 
             modelBuilder.Entity("Jacustran.Domain.Spots.Spot", b =>
@@ -155,9 +169,11 @@ namespace Jacustran.Persistence.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageUrl")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastModifiedBy")
@@ -171,8 +187,9 @@ namespace Jacustran.Persistence.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("Rating")
-                        .HasColumnType("int");
+                    b.Property<string>("Rating")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<Guid?>("TownId")
                         .HasColumnType("uniqueidentifier");
@@ -192,7 +209,7 @@ namespace Jacustran.Persistence.Migrations
                             ImageUrl = "https://dummyimage.com/600x400/eee/aaa",
                             LastModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Kiyomizu",
-                            Rating = 0,
+                            Rating = "FourStars",
                             TownId = new Guid("af1fd609-d754-4feb-8acd-c4f9ff13ba96")
                         },
                         new
@@ -203,18 +220,18 @@ namespace Jacustran.Persistence.Migrations
                             ImageUrl = "https://dummyimage.com/600x400/eee/aaa",
                             LastModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Oyamazaki",
-                            Rating = 0,
+                            Rating = "TwoStars",
                             TownId = new Guid("af1fd609-d754-4feb-8acd-c4f9ff13ba96")
                         },
                         new
                         {
                             Id = new Guid("9287afff-d754-4feb-8acd-c4f9ff13ba96"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Description = "Colorful and with antique wooden structures ",
+                            Description = "Colorful and with antique wooden structures",
                             ImageUrl = "https://dummyimage.com/600x400/eee/aaa",
                             LastModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Kinkakuji Temple",
-                            Rating = 0,
+                            Rating = "ThreeStars",
                             TownId = new Guid("af1fd609-d754-4feb-8acd-c4f9ff13ba96")
                         },
                         new
@@ -225,8 +242,19 @@ namespace Jacustran.Persistence.Migrations
                             ImageUrl = "https://dummyimage.com/600x400/eee/aaa",
                             LastModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "Umeda",
-                            Rating = 0,
+                            Rating = "FourStars",
                             TownId = new Guid("ac338e7a-d754-4feb-8acd-c4f9ff13ba96")
+                        },
+                        new
+                        {
+                            Id = new Guid("8374a227-d754-4feb-8acd-c4f9ff13fa34"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "A place to take a relaxing hot bath.",
+                            ImageUrl = "https://dummyimage.com/600x400/eee/aaa",
+                            LastModifiedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Ojiron-Onsen",
+                            Rating = "FiveStars",
+                            TownId = new Guid("ffd3d609-d754-4feb-8acd-c4f9ff13adf4")
                         });
                 });
 

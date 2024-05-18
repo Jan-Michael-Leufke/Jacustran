@@ -1,25 +1,22 @@
-﻿
+﻿namespace Jacustran.Application.Features.Citites.Queries.GetCity;
 
-namespace Jacustran.Application.Features.Citites.Queries.GetCity;
-
-internal class GetCityQueryHandler : BaseCommandHandler<City>, IQueryHandler<GetCityQuery, GetCityVm>
+internal class GetCityQueryHandler : QueryHandlerBase<GetCityQuery, GetCityResponse>
 {
-    private readonly ICityRepository _cityrepository;   
-    public GetCityQueryHandler(IUnitOfWork unitOfWork, 
-                               IMapper mapper, 
-                               IAsyncRepository<City> asyncRepository, 
-                               ICityRepository cityRepository)
-                             : base(unitOfWork, mapper, asyncRepository) 
+    private readonly ICityRepository _cityrepository;
+    public GetCityQueryHandler(IMapper mapper,
+                               ICityRepository cityRepository) : base(mapper)
     {
         _cityrepository = cityRepository;
     }
 
-    public async Task<Result<GetCityVm>> Handle(GetCityQuery request, CancellationToken token)
+    public override async Task<Result<GetCityResponse>> Handle(GetCityQuery query, CancellationToken token)
     {
-        var city = await _cityrepository.GetCityWithSpots(request.Id, token);
+        var city = await _cityrepository.GetCityWithSpots(query.CityId, token);
 
-        return city is null ? CityErrors.NotFound(request.Id).ToResult()
-                            : Result<GetCityVm>.Success(_mapper.Map<GetCityVm>(city));
+        return city is null ? CityErrors.NotFound(query.CityId).ToResult()
+                            : Result<GetCityResponse>.Success(new GetCityResponse { City = _mapper.Map<GetCityVm>(city) });
 
     }
 }
+
+

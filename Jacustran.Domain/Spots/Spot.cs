@@ -1,10 +1,20 @@
 ﻿namespace Jacustran.Domain.Spots;
 
-public class Spot(string name) : Location(name)
+public class Spot : Location
 {
-    public Spot() : this(string.Empty) { }
+    private Spot() { }
 
-    public StarRating Rating { get; set; }
+    public Spot(string name, string description, string imageUrl, StarRating rating) : base(name, description, imageUrl)
+    {
+        Rating = rating;
+    }
+
+    public Spot(Guid id, string name, string description, string imageUrl, StarRating rating) : this(name, description, imageUrl, rating)
+    {
+        Id = id;
+    }
+
+    public StarRating Rating { get; private set; }
 
     public Town? Town { get; set; }
     public Guid? TownId { get; set; }

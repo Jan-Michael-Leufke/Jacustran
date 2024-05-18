@@ -1,6 +1,6 @@
 ﻿namespace Jacustran.Persistence.Repositories;
 
-public class ProductRepository(JacustranDbContext context) : BaseRepository<Product>(context), IProductRepository
+public class ProductRepository(JacustranDbContext context) : BaseRepository<Product, Guid>(context), IProductRepository
 {
     public Task<Product> AddAsync(Product entity)
     {       

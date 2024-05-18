@@ -1,4 +1,6 @@
-﻿namespace Jacustran.Application.Features.Spots.Commands.CreateSpotForCity;
+﻿using Jacustran.SharedKernel.Interfaces.Persistence;
+
+namespace Jacustran.Application.Features.Spots.Commands.CreateSpotForCity;
 
 public static class CreateSpotForCity
 {

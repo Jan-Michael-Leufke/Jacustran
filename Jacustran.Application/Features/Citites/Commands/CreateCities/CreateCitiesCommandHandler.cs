@@ -1,15 +1,15 @@
-﻿
+﻿using Jacustran.SharedKernel.Interfaces.Persistence;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Jacustran.Application.Features.Citites.Commands.CreateCities;
 
 internal class CreateCitiesCommandHandler : ICommandHandler<CreateCitiesCommand, IEnumerable<Guid>>
 {
-    private readonly IAsyncRepository<City> _cityRepository;
+    private readonly IAsyncRepository<City, Guid> _cityRepository;
     private readonly IMapper _mapper;
     private readonly IUnitOfWork _unitOfWork;
 
-    public CreateCitiesCommandHandler(IAsyncRepository<City> cityRepository, IMapper mapper, IUnitOfWork unitOfWork)
+    public CreateCitiesCommandHandler(IAsyncRepository<City, Guid> cityRepository, IMapper mapper, IUnitOfWork unitOfWork)
     {
         _cityRepository = cityRepository;
         _mapper = mapper;
