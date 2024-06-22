@@ -1,14 +1,22 @@
-﻿namespace Jacustran.Application.Features.Citites.Commands.CreateCities;
+﻿using Microsoft.AspNetCore.Mvc;
 
-public record CreateCitiesRequest
+namespace Jacustran.Application.Features.Citites.Commands.CreateCities;
+
+public class CreateCitiesRequest
 {
-    public string Name { get; set; } = string.Empty;
-    public string? Description { get; set; }
+    public const string Route = "api/CityCollections";
 
-    public bool IsImportantCity { get; set; }
-    public int Population { get; set; }
-    public string? ImageUrl { get; set; }
+    [FromBody]
+    public IEnumerable<CreateCitiesRequestDto> Cities { get; set; } = [];
+}
 
-    public ICollection<CreateCities_CreateSpotsDto>? Spots { get; set; } = new List<CreateCities_CreateSpotsDto>();
+
+
+public class CreateCitiesRequestDto : CityForManipulationDtoRequestBase
+{
+    public ICollection<CreateCities_CreateSpotsDto>? Spots { get; set; }
 
 }
+
+
+

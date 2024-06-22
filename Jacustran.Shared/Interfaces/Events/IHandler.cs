@@ -2,7 +2,7 @@
 
 namespace Jacustran.SharedKernel.Interfaces.Events;
 
-public interface IHandler<T> where T : DomainEventBase
+public interface IHandler<TDomainEvent> : INotificationHandler<TDomainEvent> where TDomainEvent : DomainEventBase
 {
-    Task HandleAsync(T domainEvent);
+    //Task HandleAsync(TDomainEvent domainEvent, CancellationToken cancellationToken);
 }

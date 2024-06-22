@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Http;
 
 namespace Jacustran.Presentation.Controllers;
 
-[Route("api/Cities")]
-public class CitiesController(ISender sender, IMapper mapper) : ApiController(sender, mapper)
-{
+//[Route("api/Cities")]
+//public class CitiesController(ISender sender, IMapper mapper) : ApiController(sender, mapper)
+//{
     //[HttpGet]
     //[HttpHead]
     //public async Task<ActionResult<IEnumerable<GetCitiesVm>>> GetCities(CancellationToken cancellationToken)
@@ -68,28 +68,28 @@ public class CitiesController(ISender sender, IMapper mapper) : ApiController(se
     //    if (result.IsFailure) return FailureToProblemDetailsAsIActionResult(result);
 
     //    return result.Data.created ? CreatedAtRoute("GetCityAction", new { id = result.Data.cityId }, result.Data.cityId) : NoContent();        
-        
+
     //}
 
-    [HttpPatch("{cityId:guid}")]
-    public async Task<IActionResult> PartialUpsertCity(Guid cityId, 
-        JsonPatchDocument<PartialUpsertCityPatchDto> patchDoc, 
-        CancellationToken cancellationToken)
-    {
-        var command = new PartialUpsertCityCommand(cityId, patchDoc); 
+    //[HttpPatch("{cityId:guid}")]
+    //public async Task<IActionResult> PartialUpsertCity(Guid cityId,
+    //    JsonPatchDocument<PartialUpsertCityPatchDto> patchDoc,
+    //    CancellationToken cancellationToken)
+    //{
+    //    var command = new PartialUpsertCityCommand(cityId, patchDoc);
 
-        var result = await _sender.Send(command, cancellationToken);
+    //    var result = await _sender.Send(command, cancellationToken);
 
-        if(result.IsFailure) return FailureToProblemDetailsAsIActionResult(result);
+    //    if (result.IsFailure) return FailureToProblemDetailsAsIActionResult(result);
 
-        return result.Data.created ? CreatedAtRoute("GetCityAction", new { id = result.Data.cityId }, result.Data.cityId) : NoContent(); 
-    }
+    //    return result.Data.created ? CreatedAtRoute("GetCityAction", new { id = result.Data.cityId }, result.Data.cityId) : NoContent();
+    //}
 
 
-    [HttpOptions]
-    public IActionResult GetCitiesOptions()
-    {
-        Response.Headers.Append("Allow", "GET,HEAD,POST,PUT,PATCH,OPTIONS");
-        return Ok();
-    }
-}
+    //[HttpOptions]
+    //public IActionResult GetCitiesOptions()
+    //{
+    //    Response.Headers.Append("Allow", "GET,HEAD,POST,PUT,PATCH,OPTIONS");
+    //    return Ok();
+    //}
+//}

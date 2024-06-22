@@ -10,7 +10,9 @@
     <ProjectReference Include="..\..\Jacustran.Application\Jacustran.Application.csproj" />
     <ProjectReference Include="..\..\Jacustran.Persistence\Jacustran.Persistence.csproj" />
     <ProjectReference Include="..\..\Jacustran.Presentation\Jacustran.Presentation.csproj" />
+    <ProjectReference Include="..\..\Jacustran.ServerManagement_BC.RCL\Jacustran.ServerManagement_BC.RCL.csproj" />
     <ProjectReference Include="..\..\Jucustran.Infrastructure\Jucustran.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\MVC_BC.Presentation\MVC_BC.Presentation.csproj" />
     <ProjectReference Include="..\Jacustran.Client\Jacustran.Client.csproj" />
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="8.0.3" />

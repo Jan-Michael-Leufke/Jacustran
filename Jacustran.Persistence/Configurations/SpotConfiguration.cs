@@ -9,5 +9,7 @@ public class SpotConfiguration : IEntityTypeConfiguration<Spot>
         builder.Property(p => p.Name)
             .IsRequired()
             .HasMaxLength(50);
+
+        
     }
 }

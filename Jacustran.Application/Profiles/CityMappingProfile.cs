@@ -1,10 +1,14 @@
 ﻿using Jacustran.Application.Features.Citites.Commands.CreateCities;
 using Jacustran.Application.Features.Citites.Commands.CreateCity;
 using Jacustran.Application.Features.Citites.Commands.PartialUpdateCity;
-using Jacustran.Application.Features.Citites.Commands.UpdateCity;
+using Jacustran.Application.Features.Citites.Commands.PartialUpsertCity;
+using Jacustran.Application.Features.Citites.Commands.UpsertCity;
 using Jacustran.Application.Features.Citites.Queries.GetCities;
 using Jacustran.Application.Features.Citites.Queries.GetCity;
 using Jacustran.Application.Features.Citites.Queries.GetCityCollection;
+using Jacustran.Domain.ValueObjects;
+using Jacustran.SharedKernel.ValueObjects;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Jacustran.Application.Profiles;
 
@@ -14,13 +18,18 @@ public class CityMappingProfile : Profile
     {
         //Create City
         CreateMap<CreateCityRequest, CreateCityCommand>();
-        CreateMap<CreateCityCommand, City>();
+        CreateMap<CreateCityCommand, City>().ForMember(d => d.Name, opt => opt.MapFrom(s => LocationName.Create(s.Name).Data));
         CreateMap<CreateCity_CreateSpotsDto, Spot>().ForMember(d => d.Rating, opt => opt.MapFrom(s => s.StarRating))
-            .ConstructUsing(dto  => new Spot(dto.Name, dto.Description, dto.ImageUrl, dto.StarRating));
+            .ConstructUsing(dto => new Spot(LocationName.Create(dto.Name).Data, dto.Description, dto.ImageUrl, dto.StarRating));
+
 
         //Create Cities
-        CreateMap<IEnumerable<CreateCitiesRequest>, CreateCitiesCommand>().ForMember(d => d.Requests, opt => opt.MapFrom(s => s));
+        CreateMap<IEnumerable<CreateCitiesRequest>, CreateCitiesCommand>().ForMember(d => d.Cities, opt => opt.MapFrom(s => s));
         CreateMap<CreateCitiesRequest, CreateCitiesCommandInnerDto>();
+
+        CreateMap<CreateCitiesRequest, CreateCitiesCommand>();
+        CreateMap<CreateCitiesRequestDto, CreateCitiesCommandInnerDto>();
+
         CreateMap<CreateCitiesCommandInnerDto, City>();
         //CreateMap<CreateCitiesCommand, City>();
         CreateMap<CreateCities_CreateSpotsDto, Spot>();
@@ -50,11 +59,19 @@ public class CityMappingProfile : Profile
             });
 
         CreateMap<UpsertCityCommand, City>();
-        CreateMap<UpsertCityRequest_UpsertSpotsDto, Spot>();
+        CreateMap<UpsertCity_UpsertSpotsDto, Spot>();
 
-        //partial update city
+        //partial upsert city
         CreateMap<PartialUpsertCityPatchDto, City>().ReverseMap();
-        CreateMap<PartialUpsertCityPatchDto_PartialUpsertSpotsDto, Spot>().ReverseMap();
+        CreateMap<PartialUpsertCityPatchDto_PartialUpsertSpotsDto, Spot>().ForMember(d => d.Rating, opt => opt.MapFrom(s => s.StarRating ));
+        CreateMap<Spot, PartialUpsertCityPatchDto_PartialUpsertSpotsDto>().ForMember(d => d.StarRating, opt => opt.MapFrom(s => s.Rating));
+        CreateMap<PartialUpsertCityRequest, PartialUpsertCityCommand>().ConstructUsing(request => 
+        new PartialUpsertCityCommand(request.CityId, request.Body.PatchDocument));
+
+        
     }
+    
+    
 
 }
+

@@ -2,9 +2,9 @@
 
 internal class GetCityQueryHandler : QueryHandlerBase<GetCityQuery, GetCityResponse>
 {
-    private readonly ICityRepository _cityrepository;
+    private readonly ICityReadRepository _cityrepository;
     public GetCityQueryHandler(IMapper mapper,
-                               ICityRepository cityRepository) : base(mapper)
+                               ICityReadRepository cityRepository) : base(mapper)
     {
         _cityrepository = cityRepository;
     }

@@ -4,13 +4,14 @@ namespace Jacustran.Application.Features.Citites.Queries.GetCities;
 
 public class GetCitiesQueryHandler : QueryHandlerBase<GetCitiesQuery, GetCitiesResponse> 
 {
-    private readonly IAsyncRepository<City, Guid> _asyncRepository;
+    private readonly ICityReadRepository _asyncReadRepository;
 
-    public GetCitiesQueryHandler(IMapper mapper, IAsyncRepository<City, Guid> asyncRepository) : base(mapper)  => _asyncRepository = asyncRepository;
+    public GetCitiesQueryHandler(IMapper mapper, ICityReadRepository asyncReadRepository) : base(mapper)  => 
+        _asyncReadRepository = asyncReadRepository;
 
     public override async Task<Result<GetCitiesResponse>> Handle(GetCitiesQuery query, CancellationToken token)
     {
-        var getCitiesVms = _mapper.Map<IEnumerable<GetCitiesVm>>((await _asyncRepository.GetAllAsync(token)).OrderBy(c => c.Name));
+        var getCitiesVms = _mapper.Map<IEnumerable<GetCitiesVm>>((await _asyncReadRepository.GetAllAsync(token)).OrderBy(c => c.Name));
 
         return Result<GetCitiesResponse>.Success(new GetCitiesResponse(getCitiesVms));
 

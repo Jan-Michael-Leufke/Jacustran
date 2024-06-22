@@ -36,7 +36,7 @@ public class BaseRepository<TEntity, TId>(JacustranDbContext context) : IAsyncRe
 
     public void Update(TEntity entity) => _context.Update(entity);
     
-
+     
     public async Task<bool> IsIdValid(TId id, CancellationToken cancellationToken = default)
     {
         return await _context.Set<TEntity>().AnyAsync(e => e.Id.Equals(id), cancellationToken);

@@ -95,7 +95,7 @@ namespace Jacustran.Persistence.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("Jacustran.Domain.Shared.Town", b =>
+            modelBuilder.Entity("Jacustran.Domain.Shared.Location", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -114,8 +114,8 @@ namespace Jacustran.Persistence.Migrations
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
-                        .HasMaxLength(5)
-                        .HasColumnType("nvarchar(5)");
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
@@ -132,16 +132,23 @@ namespace Jacustran.Persistence.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.HasKey("Id");
+
+                    b.ToTable("Location");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Location");
+
+                    b.UseTphMappingStrategy();
+                });
+
+            modelBuilder.Entity("Jacustran.Domain.Shared.Town", b =>
+                {
+                    b.HasBaseType("Jacustran.Domain.Shared.Location");
+
                     b.Property<int>("Population")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("Town");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Town");
-
-                    b.UseTphMappingStrategy();
+                    b.HasDiscriminator().HasValue("Town");
 
                     b.HasData(
                         new
@@ -158,34 +165,7 @@ namespace Jacustran.Persistence.Migrations
 
             modelBuilder.Entity("Jacustran.Domain.Spots.Spot", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("LastModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.HasBaseType("Jacustran.Domain.Shared.Location");
 
                     b.Property<string>("Rating")
                         .IsRequired()
@@ -194,11 +174,9 @@ namespace Jacustran.Persistence.Migrations
                     b.Property<Guid?>("TownId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
-
                     b.HasIndex("TownId");
 
-                    b.ToTable("Spots");
+                    b.HasDiscriminator().HasValue("Spot");
 
                     b.HasData(
                         new
@@ -258,7 +236,7 @@ namespace Jacustran.Persistence.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Jacustran.Domain.Cities.City", b =>
+            modelBuilder.Entity("Jacustran.Domain.City.City", b =>
                 {
                     b.HasBaseType("Jacustran.Domain.Shared.Town");
 

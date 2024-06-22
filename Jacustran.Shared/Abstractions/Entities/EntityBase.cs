@@ -1,5 +1,6 @@
 ﻿using Jacustran.SharedKernel.Abstractions.Events;
 using Jacustran.SharedKernel.ValueObjects;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Jacustran.SharedKernel.Abstractions.Entities;
 
@@ -10,10 +11,12 @@ public abstract class EntityBase<TId> : AuditableEntity where TId : struct
 
     public TId Id { get; set; }
 
-    //public List<DomainEventBase> DomainEvents { get; set; } = new();
+    [NotMapped]
+    public List<DomainEventBase> DomainEvents { get; set; } = new();
 
     //public AuditProperties AuditProperties { get; set; } = AuditProperties.Default;
 
+   
 
     public override bool Equals(object? obj)
     {

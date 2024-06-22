@@ -31,6 +31,7 @@ public static class AsyncEndpointBase
         }
     }
 
+
     public static class WithoutRequest
     {
         public abstract class WithResponse<TResponse> : ApiController
@@ -55,6 +56,13 @@ public static class AsyncEndpointBase
             { }
 
             public abstract Task<ActionResult> HandleAsync(CancellationToken cancellationToken = default);
+        }
+
+        public abstract class WithoutResponseAsIActionResult : ApiController
+        {
+            protected WithoutResponseAsIActionResult(ISender sender, IMapper mapper) : base(sender, mapper) { }
+
+            public abstract IActionResult Handle();
         }
     }
 

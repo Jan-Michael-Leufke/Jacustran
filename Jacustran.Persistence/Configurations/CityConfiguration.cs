@@ -1,4 +1,5 @@
-﻿using Jacustran.Domain.Cities;
+﻿using Jacustran.Domain.City;
+using Jacustran.Domain.ValueObjects;
 
 namespace Jacustran.Persistence.Configurations;
 
@@ -10,9 +11,9 @@ public class CityConfiguration : IEntityTypeConfiguration<City>
             .IsRequired()
             .HasMaxLength(50);
 
-        builder.Property(p  => p.Description)
+        builder.Property(p => p.Description)
             .HasMaxLength(200);
 
-        
+
     }
 }

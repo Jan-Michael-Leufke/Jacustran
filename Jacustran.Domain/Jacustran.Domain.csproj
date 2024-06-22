@@ -17,9 +17,9 @@
   <ItemGroup>
     <Folder Include="Aggregates\" />
     <Folder Include="Constants\" />
-    <Folder Include="Events\" />
-    <Folder Include="Handlers\" />
-    <Folder Include="Services\" />
+    <Folder Include="Factories\" />
+    <Folder Include="IntegrationEvents\" />
+    <Folder Include="Repositories\" />
   </ItemGroup>
 
 </Project>

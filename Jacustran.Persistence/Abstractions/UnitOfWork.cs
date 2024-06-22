@@ -1,4 +1,5 @@
 ﻿using Jacustran.SharedKernel.Abstractions.Entities;
+using Jacustran.SharedKernel.Abstractions.Events;
 using Jacustran.SharedKernel.Interfaces.Persistence;
 using Jacustran.SharedKernel.ValueObjects;
 using System.Reflection;
@@ -13,8 +14,33 @@ public class UnitOfWork(JacustranDbContext jacustranDbContext) : IUnitOfWork
     {
         SetAuditProperties();
 
-        return await _context.SaveChangesAsync(cancellationToken);
+        int result = await _context.SaveChangesAsync(cancellationToken);
+
+        if (_context._mediator is null) return result;
+
+        foreach (var entity in _context.ChangeTracker.Entries().Select(e => e.Entity)) 
+        {
+            PropertyInfo domainEventsProperty = entity.GetType().GetProperty("DomainEvents", BindingFlags.Public | BindingFlags.Instance);
+            var domainEvents = (List<DomainEventBase>)domainEventsProperty.GetValue(entity);
+            
+            if (domainEvents.Any())
+            {
+                domainEventsProperty.SetValue(entity, new List<DomainEventBase>());
+
+                Console.WriteLine($"Entity {entity.GetType().Name} has {domainEvents.Count} domain events. Publishing...");
+
+                foreach (var domainEvent in domainEvents) 
+                {
+                    await _context._mediator.Publish(domainEvent).ConfigureAwait(false);
+                }
+            }
+        }
+
+        return result;
     }
+
+
+
 
     public async Task<Result<int>> TrySaveChangesAsync(CancellationToken cancellationToken = default)
     {

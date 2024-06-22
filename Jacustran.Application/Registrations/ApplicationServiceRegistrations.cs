@@ -4,7 +4,7 @@ global using FluentValidation;
 
 global using Jacustran.Domain.Products;
 global using Jacustran.Domain.Categories;
-global using Jacustran.Domain.Cities;
+global using Jacustran.Domain.City;
 global using Jacustran.Domain.Spots;
 global using Jacustran.Domain.Shared;
 
@@ -22,8 +22,8 @@ global using Jacustran.SharedKernel.Interfaces.MediatR;
 global using Jacustran.SharedKernel.Abstractions;
 global using Jacustran.Application.Abstractions.Api;
 
-
-
+global using Jacustran.Application.Features.Shared.Cities;
+global using Jacustran.Application.Features.Shared.Spots;
 
 global using Microsoft.AspNetCore.JsonPatch;
 

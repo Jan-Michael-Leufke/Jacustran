@@ -1,6 +1,8 @@
 ﻿using FluentValidation.AspNetCore;
 using Jacustran.Application.Registrations;
 using Jacustran.Components;
+using Jacustran.Domain.DomainServices;
+using Jacustran.Domain.Registrations;
 using Jacustran.Middleware.ExceptionsHandling;
 using Jacustran.Persistence.DbContexts;
 using Jacustran.Persistence.Registrations;
@@ -22,6 +24,7 @@ public static class StartupExtensions
         //RegisterSerilog(builder);
 
         builder.Services.RegisterApplicationServices()
+                        .RegisterDomainServices()
                         .RegisterPersistenceServices(builder.Configuration);
 
         RegisterBlazorServices(builder);
@@ -35,13 +38,18 @@ public static class StartupExtensions
         RegisterScopedServices(builder);
 
         builder.Services.AddHttpContextAccessor();
+
         builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
-        RegisterProblemDetails(builder);
+        builder.RegisterProblemDetails();
 
         RegisterCorsServices(builder);
 
         RegisterSwaggerServices(builder);
+
+        builder.Services.AddMemoryCache();
+
+        ServiceLocator.Instance = builder.Services.BuildServiceProvider();
 
         return builder.Build();
     }
@@ -113,7 +121,7 @@ public static class StartupExtensions
 
     private static void RegisterMvcServices(WebApplicationBuilder builder)
     {
-        builder.Services.AddControllers(configure =>
+        builder.Services.AddControllersWithViews(configure =>
         {
             configure.ReturnHttpNotAcceptable = true;
             //configure.InputFormatters.Add(new XmlSerializerInputFormatter(new() { AllowEmptyInputInBodyModelBinding = true }));
@@ -128,7 +136,7 @@ public static class StartupExtensions
        .AddXmlDataContractSerializerFormatters();
     }
 
-    private static void RegisterProblemDetails(WebApplicationBuilder builder)
+    private static void RegisterProblemDetails(this WebApplicationBuilder builder)
     {
         builder.Services.AddProblemDetails(configure =>
         {
@@ -161,10 +169,15 @@ public static class StartupExtensions
         {
             //app.UseExceptionHandler();
             //app.UseWebAssemblyDebugging();
+
+
+            //if this is active and Services.AddProblemDetails is registered the latter one will get precedence, global ex handler also doesn´t make a difference
             app.UseDeveloperExceptionPage();
         }
         else
         {
+            //this will not run if global exception handler is registered
+            //if global ex handler is not defined and Services.AddProblemDetails is registered, this method here will gain precedence
             app.UseExceptionHandler(appBuilder =>
             {
                 appBuilder.Run(async context =>
@@ -192,12 +205,16 @@ public static class StartupExtensions
         app.UseAntiforgery();
         app.MapControllers();
         
+
         
+
+
 
         app.MapRazorComponents<App>()
            .AddInteractiveServerRenderMode()
            .AddInteractiveWebAssemblyRenderMode()
-           .AddAdditionalAssemblies(typeof(Jacustran.Client._Imports).Assembly);
+           .AddAdditionalAssemblies(typeof(Jacustran.Client._Imports).Assembly)
+           .AddAdditionalAssemblies(typeof(ServerManagement_BC.RCL._Imports).Assembly);
 
 
         return app;
@@ -224,4 +241,13 @@ public static class StartupExtensions
         }
 
     }
+
+    
 }
+
+
+
+
+
+
+

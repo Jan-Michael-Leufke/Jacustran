@@ -1,4 +1,5 @@
-﻿namespace Jacustran.Application.Features.Citites.Commands.PartialUpdateCity;
+﻿
+namespace Jacustran.Application.Features.Citites.Commands.PartialUpdateCity;
 
 public class PartialUpsertCityCommandValidator : AbstractValidator<PartialUpsertCityCommand>
 {
@@ -19,18 +20,9 @@ public class PartialUpsertCityPatchDtoValidator : AbstractValidator<PartialUpser
 {
     public PartialUpsertCityPatchDtoValidator()
     {
-        RuleFor(p => p.Name)
-            .NotEmpty().WithMessage("{PropertyName} is required.")
-            .NotNull()
-            .MaximumLength(50).WithMessage("{PropertyName} must not exceed 50 characters.");
+        RuleFor(c => c).SetValidator(new CityForManipulationDtoBaseValidator());
 
-        RuleFor(p => p.Description)
-            .MaximumLength(200).WithMessage("{PropertyName} must not exceed 200 characters.");
-
-        RuleFor(p => p.ImageUrl)
-            .MaximumLength(200).WithMessage("{PropertyName} must not exceed 200 characters.");
-
-        RuleForEach(p => p.Spots).SetValidator(new PartialUpsertCityPatchDto_PartialUpsertSpotsDtoValidator());
+        RuleForEach(c => c.Spots).SetValidator(new PartialUpsertCityPatchDto_PartialUpsertSpotsDtoValidator());
     }
 }
 
@@ -38,16 +30,7 @@ public class PartialUpsertCityPatchDto_PartialUpsertSpotsDtoValidator : Abstract
 {
     public PartialUpsertCityPatchDto_PartialUpsertSpotsDtoValidator()
     {
-        RuleFor(p => p.Name)
-            .NotEmpty().WithMessage("{PropertyName} is required.")
-            .NotNull()
-            .MaximumLength(50).WithMessage("{PropertyName} must not exceed 50 characters.");
-
-        RuleFor(p => p.Description)
-            .MaximumLength(200).WithMessage("{PropertyName} must not exceed 200 characters.");
-
-        RuleFor(p => p.ImageUrl)
-            .MaximumLength(200).WithMessage("{PropertyName} must not exceed 200 characters.");
+        RuleFor(s => s).SetValidator(new SpotForManipulationDtoBaseValidator());
     }
 }   
 

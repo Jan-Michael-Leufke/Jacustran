@@ -1,6 +1,6 @@
 ﻿
 using Jacustran.Presentation.Abstractions;
-using Jacustran.Presentation.Modelbinders;
+using Jacustran.Application.Modelbinders;
 using Microsoft.AspNetCore.Http;
 using static Jacustran.Application.Features.Spots.Commands.CreateSpots.CreateSpots;
 using static Jacustran.Application.Features.Spots.Queries.GetSpotCollection.GetSpotCollection;

@@ -2,7 +2,11 @@
 
 using AutoMapper;
 using FluentValidation;
+using FluentValidation.Results;
 using Jacustran.SharedKernel.Interfaces.Persistence;
+using System.Collections.Generic;
+using System.Reflection;
+using ValidationResult = Jacustran.SharedKernel.Responses.ValidationResult;
 
 namespace Jacustran.SharedKernel.Abstractions.MediatR;
 
@@ -16,7 +20,7 @@ public abstract class CommandHandlerBase<TCommand, TResponse> : ICommandHandler<
         _mapper = mapper;
     }
 
-    public abstract Task<Result<TResponse>> Handle(TCommand request, CancellationToken cancellationToken);
+    public abstract Task<Result<TResponse>> Handle(TCommand command, CancellationToken cancellationToken);
 
 
     public virtual async Task<Result<TResponse>?> ValidateDtoAsync<TDto>(TDto dtoToValidate, IValidator<TDto> validator, CancellationToken token)
@@ -35,6 +39,33 @@ public abstract class CommandHandlerBase<TCommand, TResponse> : ICommandHandler<
 
         return null;
     }
+
+
+
+    public bool IsDomainValidationResultsFaulted(out ValidationResult<TResponse>? validationResult,
+                                                 params DomainValidationResult[] domainValidationResults)
+    {
+        List<ValidationFailure> validationFailures = [];
+
+        foreach (var domainValidationResult in domainValidationResults)
+        {
+            if (domainValidationResult.IsFaulted) 
+                validationFailures.AddRange(((ValidationException)domainValidationResult.Exception!).Errors);
+        }
+
+        if (validationFailures.Any())
+        {
+            validationResult = ValidationResult<TResponse>.WithErrors(validationFailures
+                .Select(f => new Error($"{f.ErrorCode}.{f.PropertyName} value: {f.AttemptedValue}", f.ErrorMessage)).ToArray());
+
+            return true;
+        }
+
+        validationResult = null;
+
+        return false;
+    }
+
 }
 
 public abstract class CommandHandlerBase<TCommand> : ICommandHandler<TCommand> where TCommand : ICommand
@@ -67,3 +98,27 @@ public abstract class CommandHandlerBase<TCommand> : ICommandHandler<TCommand> w
         return null;
     }
 }
+
+
+
+
+
+//public ValidationResult<TResponse>? ValidateDomainValidationResults(out ValidationResult<TResponse> validationResult,
+//                                                                    params DomainValidationResult[] domainValidationResults)
+//{
+//    List<ValidationFailure> validationFailures = [];
+
+//    foreach (var domainValidationResult in domainValidationResults)
+//    {
+//        if (domainValidationResult.IsFaulted)
+//            validationFailures.AddRange(((ValidationException)domainValidationResult.Exception!).Errors);
+//    }
+
+//    if (validationFailures.Any())
+//    {
+//        return ValidationResult<TResponse>.WithErrors(validationFailures
+//            .Select(f => new Error($"{f.ErrorCode}.{f.PropertyName} value: {f.AttemptedValue}", f.ErrorMessage)).ToArray());
+//    }
+
+//    return null;
+//}

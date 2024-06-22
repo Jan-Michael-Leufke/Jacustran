@@ -3,7 +3,7 @@ global using Jacustran.Domain.Enumerations;
 global using Jacustran.Domain.Exceptions;
 global using Jacustran.SharedKernel.Responses;
 global using Jacustran.Domain.Categories;
-global using Jacustran.Domain.Cities;
+global using Jacustran.Domain.City;
 global using Jacustran.Domain.Products;
 global using Jacustran.Domain.Spots;
 global using Jacustran.Domain.Shared;

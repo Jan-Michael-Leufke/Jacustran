@@ -1,0 +1,32 @@
+
+@scheme = https://
+@host = localhost:7248
+@url = {{scheme}}{{host}}/api
+@Kyoto_CityGuid = af1fd609-d754-4feb-8acd-c4f9ff13ba96
+
+
+GET {{url}}/Test
+###
+GET {{url}}/cities/{{Kyoto_CityGuid}}
+Accept: application/json
+###
+
+POST {{url}}/Test/776
+Content-Type: application/json
+
+{
+  "Name": "Test stuff",
+  "Description": "This is a test description",
+}
+###
+
+POST https://localhost:7028/api/Test/776
+Content-Type: application/json
+Accept: application/json
+
+{
+
+   "Name": "Test stuff"
+    
+}
+

@@ -1,7 +1,7 @@
 ﻿using Jacustran.Domain.Products;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Jacustran.Controllers;
+namespace Jacustran.Presentation.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

@@ -1,5 +1,5 @@
 ﻿global using Jacustran.Domain.Categories;
-global using Jacustran.Domain.Cities;
+global using Jacustran.Domain.City;
 global using Jacustran.Domain.Products;
 global using Jacustran.SharedKernel.Contracts;
 global using Jacustran.Domain.Spots;
@@ -38,7 +38,9 @@ public static class PersistenceServiceRegistrations
         });
 
         services.AddScoped(typeof(IAsyncRepository<,>), typeof(BaseRepository<,>));
+        services.AddScoped(typeof(IAsyncReadRepository<,>), typeof(CachedRepository<,>));
         services.AddScoped<ICityRepository, CityRepository>();
+        services.AddScoped<ICityReadRepository, CityReadRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<ISpotRepository, SpotRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();

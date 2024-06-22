@@ -14,6 +14,8 @@ public class GetCities : AsyncEndpointBase.WithoutRequest.WithResponse<GetCities
     //[SwaggerOperation]
     public override async Task<ActionResult<GetCitiesResponse>> HandleAsync(CancellationToken cancellationToken = default)
     {
+        throw new Exception("This is a test exception");
+
         return Ok((await _sender.Send(new GetCitiesQuery(), cancellationToken)).Data);
     }
 }

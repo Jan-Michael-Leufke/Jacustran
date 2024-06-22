@@ -55,7 +55,7 @@ Content-Type: application/json
 }
 ###
 
-PUT {{url}}/cities/af1fd609-d754-4feb-8acd-c4f9ff13ba96
+PUT {{url}}/cities/{{Kyoto_CityGuid}}
 Content-Type: application/json
 Accept: application/json
 
@@ -65,6 +65,28 @@ Accept: application/json
   "description": "Kyoto is a city in Japan - updated by PUT Upsert",
   "isImportantCity" : true,
   "imageUrl": "testImageUrl.com - updated by PUT Upsert",
+}
+###
+
+PUT {{url}}/cities/{{Kyoto_CityGuid}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "Name":"Kyoto updated with PUT Upsert",
+  "population": 5000,
+  "description": "Kyoto is a city in Japan - updated by PUT Upsert",
+  "isImportantCity" : true,
+  "imageUrl": "testImageUrl.com - updated by PUT Upsert",
+  "Spots" : 
+  [
+    {
+        "name" : "Kinkaku-ji- test create"
+    },
+    {
+        "name" : "Kiyomizu-dera- test create"
+    }
+  ]
 }
 ###
 

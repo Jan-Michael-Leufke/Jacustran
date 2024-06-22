@@ -1,7 +1,7 @@
 ﻿
 using Jacustran.SharedKernel.Interfaces.Persistence;
 
-namespace Jacustran.Application.Features.Citites.Commands.UpdateCity;
+namespace Jacustran.Application.Features.Citites.Commands.UpsertCity;
 
 internal class UpsertCityCommandHandler : ICommandHandler<UpsertCityCommand, (Guid, bool)>
 {
@@ -17,16 +17,21 @@ internal class UpsertCityCommandHandler : ICommandHandler<UpsertCityCommand, (Gu
     }
 
 
-    public async Task<Result<(Guid, bool)>> Handle(UpsertCityCommand request, CancellationToken cancellationToken)
+    public async Task<Result<(Guid, bool)>> Handle(UpsertCityCommand command, CancellationToken cancellationToken)
     {
-        var city = request.Spots is null || !request.Spots.Any() ?
-            await _cityRepository.GetByIdAsync(request.CityId, cancellationToken) : 
-            await _cityRepository.GetCityWithSpots(request.CityId, cancellationToken);
+        City? city = null;
+
+        if (command.CityId != default)
+        {
+            city = command.Spots is null || !command.Spots.Any() ?
+                await _cityRepository.GetByIdAsync(command.CityId, cancellationToken) :
+                await _cityRepository.GetCityWithSpots(command.CityId, cancellationToken);
+        }
 
         if (city == null) 
         {
-            city = _mapper.Map<City>(request);
-            city.Id = request.CityId; 
+            city = _mapper.Map<City>(command);
+            city.Id = command.CityId; 
             _cityRepository.Add(city);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
@@ -34,7 +39,7 @@ internal class UpsertCityCommandHandler : ICommandHandler<UpsertCityCommand, (Gu
             return Result<(Guid, bool)>.Success((city.Id, true));
         }
 
-       _mapper.Map(request, city);
+       _mapper.Map(command, city);
 
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
